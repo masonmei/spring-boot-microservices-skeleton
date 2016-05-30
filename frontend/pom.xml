@@ -12,20 +12,32 @@
     <packaging>pom</packaging>
 
     <properties>
-        <nodejs.version>v6.1.0</nodejs.version>
+        <node.version>v6.1.0</node.version>
         <npm.version>3.8.9</npm.version>
+        <frontend-maven-plugin.version>1.0</frontend-maven-plugin.version>
     </properties>
 
     <build>
         <plugins>
             <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-clean-plugin</artifactId>
+                <configuration>
+                    <filesets>
+                        <fileset>
+                            <directory>src/main/webapp/dep</directory>
+                            <directory>node_modules</directory>
+                        </fileset>
+                    </filesets>
+                </configuration>
+            </plugin>
+            <plugin>
                 <groupId>com.github.eirslett</groupId>
                 <artifactId>frontend-maven-plugin</artifactId>
-                <version>1.0</version>
+                <version>${frontend-maven-plugin.version}</version>
                 <configuration>
-                    <nodeVersion>${nodejs.version}</nodeVersion>
+                    <nodeVersion>${node.version}</nodeVersion>
                     <npmVersion>${npm.version}</npmVersion>
-                    <!--<workingDirectory>src/main/frontend</workingDirectory>-->
                 </configuration>
                 <executions>
                     <execution>
@@ -34,24 +46,14 @@
                             <goal>install-node-and-npm</goal>
                         </goals>
                     </execution>
+
                     <execution>
                         <id>npm install</id>
                         <goals>
                             <goal>npm</goal>
                         </goals>
-                        <!-- Optional configuration which provides for running any npm command -->
                         <configuration>
                             <arguments>install</arguments>
-                        </configuration>
-                    </execution>
-
-                    <execution>
-                        <id>npm run build</id>
-                        <goals>
-                            <goal>npm</goal>
-                        </goals>
-                        <configuration>
-                            <arguments>run build</arguments>
                         </configuration>
                     </execution>
 
@@ -66,36 +68,67 @@
                     </execution>
 
                     <execution>
-                        <id>jspm install</id>
+                        <id>gulp build</id>
                         <goals>
-                            <goal>jspm</goal>
+                            <goal>gulp</goal>
                         </goals>
                         <configuration>
-                            <arguments>--version</arguments>
+                            <arguments>build --no-notification</arguments>
                         </configuration>
                     </execution>
 
                     <execution>
-                        <id>grunt build</id>
+                        <id>gulp test</id>
                         <goals>
-                            <goal>grunt</goal>
+                            <goal>gulp</goal>
                         </goals>
+                        <phase>test</phase>
                         <configuration>
-                            <arguments>--no-color</arguments>
-                        </configuration>
-                    </execution>
-
-                    <execution>
-                        <id>javascript tests</id>
-                        <goals>
-                            <goal>karma</goal>
-                        </goals>
-                        <configuration>
-                            <karmaConfPath>src/test/javascript/karma.conf.ci.js</karmaConfPath>
+                            <arguments>test --no-notification</arguments>
                         </configuration>
                     </execution>
                 </executions>
             </plugin>
         </plugins>
+        <pluginManagement>
+            <plugins>
+                <!--
+                    This plugin's configuration is used to store Eclipse m2e settings only.
+                    It has no influence on the Maven build itself.
+                    Remove when the m2e plugin can correctly bind to Maven lifecycle
+                -->
+                <plugin>
+                    <groupId>org.eclipse.m2e</groupId>
+                    <artifactId>lifecycle-mapping</artifactId>
+                    <version>1.0.0</version>
+                    <configuration>
+                        <lifecycleMappingMetadata>
+                            <pluginExecutions>
+                                <pluginExecution>
+                                    <pluginExecutionFilter>
+                                        <groupId>com.github.eirslett</groupId>
+                                        <artifactId>
+                                            frontend-maven-plugin
+                                        </artifactId>
+                                        <versionRange>
+                                            ${frontend-maven-plugin.version}
+                                        </versionRange>
+                                        <goals>
+                                            <goal>install-node-and-npm</goal>
+                                            <goal>npm</goal>
+                                            <goal>bower</goal>
+                                            <goal>gulp</goal>
+                                        </goals>
+                                    </pluginExecutionFilter>
+                                    <action>
+                                        <ignore/>
+                                    </action>
+                                </pluginExecution>
+                            </pluginExecutions>
+                        </lifecycleMappingMetadata>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
     </build>
 </project>
