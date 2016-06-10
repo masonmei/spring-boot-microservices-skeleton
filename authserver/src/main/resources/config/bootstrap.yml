@@ -1,0 +1,26 @@
+server:
+  port: 19999
+
+spring:
+  application:
+    name: authserver
+  cloud:
+    config:
+      uri: http://admin:admin@localhost:18761
+  messages:
+    basename: i18n/messages
+  mvc:
+    favicon:
+      enabled: false
+  thymeleaf:
+    mode: XHTML
+management:
+  context-path: /management
+  health:
+    mail:
+      enabled: false
+security:
+  user:
+    name: mason
+    password: Rdis2fun
+

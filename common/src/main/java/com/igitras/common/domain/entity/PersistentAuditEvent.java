@@ -1,7 +1,5 @@
 package com.igitras.common.domain.entity;
 
-import com.sun.istack.internal.NotNull;
-
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
@@ -13,17 +11,16 @@ import javax.persistence.Index;
 import javax.persistence.JoinColumn;
 import javax.persistence.MapKeyColumn;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 /**
  * @author mason
  */
 @Entity
-@Table(indexes = {
-        @Index(name = "principal_idx", columnList = "principal"),
+@Table(indexes = {@Index(name = "principal_idx", columnList = "principal"),
         @Index(name = "principal_audit_date_idx", columnList = "principal,event_date"),
-        @Index(name = "audit_date_idx", columnList = "event_date")
-})
-public class PersistentAuditEvent extends PersistEntity<Long> {
+        @Index(name = "audit_date_idx", columnList = "event_date")})
+public class PersistentAuditEvent {
 
     private static final long serialVersionUID = -1308989751614059076L;
 
@@ -39,7 +36,7 @@ public class PersistentAuditEvent extends PersistEntity<Long> {
     @ElementCollection
     @MapKeyColumn(name = "name")
     @Column(name = "value")
-    @CollectionTable(name = "audit_evt_data", joinColumns=@JoinColumn(name="event_id"))
+    @CollectionTable(name = "audit_evt_data", joinColumns = @JoinColumn(name = "event_id"))
     private Map<String, String> data = new HashMap<>();
 
     public String getPrincipal() {

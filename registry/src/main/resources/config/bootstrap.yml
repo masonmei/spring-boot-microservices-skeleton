@@ -1,0 +1,15 @@
+server:
+  port: 18761
+
+management:
+  context-path: /management
+
+spring:
+  application:
+    name: registry
+  mvc:
+    favicon:
+      enabled: false
+
+
+

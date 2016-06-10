@@ -3,24 +3,31 @@ package com.igitras.common.utils;
 /**
  * @author mason
  */
-public class Constants {
+public abstract class Constants {
 
-    public static class Profile {
+    public abstract static class Profile {
         public static final String DEV = "dev";
-        public static final String TEST = "test";
         public static final String PROD = "product";
+        public static final String NATIVE = "native";
     }
 
-    public static class DataFormatter {
+    public abstract static class Authority {
+        public static final String ADMIN = "ROLE_ADMIN";
+        public static final String USER = "ROLE_USER";
+        public static final String ANONYMOUS = "ROLE_ANONYMOUS";
+    }
+
+    public abstract static class DataFormatter {
         public static final String DATE_FORMAT = "yyyy-MM-dd";
         public static final String TIME_FORMAT = "HH:mm:ss";
-        public static final String DATE_TIME_FORMAT = DATE_FORMAT
-                + "'T'"
-                + TIME_FORMAT
-                + ".SSS'Z'";
+        public static final String DATE_TIME_FORMAT = DATE_FORMAT + "'T'" + TIME_FORMAT + ".SSS'Z'";
     }
 
-    public static class Constrains {
+    public abstract static class Constrains {
         public static final String LOGIN_REGEX = "^[A-Za-z0-9-_@.]*$";
+    }
+
+    public abstract static class Account {
+        public static final String SYSTEM = "system";
     }
 }
