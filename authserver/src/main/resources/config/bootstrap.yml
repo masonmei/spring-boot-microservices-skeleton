@@ -1,12 +1,13 @@
 server:
   port: 19999
+  context-path: /uaa
 
 spring:
   application:
     name: authserver
   cloud:
     config:
-      uri: http://admin:admin@127.0.0.1:18761
+      uri: http://127.0.0.1:18888/
   messages:
     basename: i18n/messages
   mvc:

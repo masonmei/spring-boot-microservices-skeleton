@@ -14,7 +14,7 @@ import java.net.UnknownHostException;
 /**
  * @author mason
  */
-@SpringBootApplication(exclude = {JpaRepositoriesAutoConfiguration.class})
+@SpringBootApplication
 @EnableZuulProxy
 @EnableEurekaClient
 @EnableConfigurationProperties({AppProperties.class})

@@ -1,0 +1,31 @@
+# Define the port where the API gateway server would be running
+server:
+  port: 15555
+
+spring:
+  application:
+    name: gateway
+  cloud:
+    config:
+      uri: http://127.0.0.1:18888
+  messages:
+    basename: i18n/messages
+  mvc:
+    favicon:
+      enabled: false
+
+management:
+  context-path: /management
+  health:
+    mail:
+      enabled: false
+
+eureka:
+    instance:
+        prefer-ip-address: true
+    client:
+        enabled: true
+        healthcheck:
+            enabled: true
+        registerWithEureka: true
+        fetchRegistry: true

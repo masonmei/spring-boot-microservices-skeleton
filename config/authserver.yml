@@ -1,11 +1,6 @@
 # We need to setup different context root for the auth server so that we can store separate
 # cookies for both the API gateway as well as the OAuth2 authorization server.
 
-eureka:
-  client:
-    serviceUrl:
-      defaultZone: http://admin:admin@127.0.0.1:18761/eureka/
-
 # Datasource and JPA configuration to be used for storing the OAuth authorization details 
 # and token store
 spring:

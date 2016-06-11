@@ -2,7 +2,7 @@ package com.igitras.registry;
 
 import com.igitras.common.BaseApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.cloud.config.server.EnableConfigServer;
+import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.cloud.netflix.eureka.server.EnableEurekaServer;
 
 import java.net.UnknownHostException;
@@ -12,7 +12,7 @@ import java.net.UnknownHostException;
  */
 @SpringBootApplication
 @EnableEurekaServer
-@EnableConfigServer
+@EnableEurekaClient
 public class RegistryApplication extends BaseApplication {
 
     public static void main(String[] args) throws UnknownHostException {

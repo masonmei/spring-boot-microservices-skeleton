@@ -23,7 +23,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
         // @formatter:off
         http.requestMatchers().antMatchers("/me")
                 .and().authorizeRequests()
-                        .antMatchers("/me").access("#oauth2.hasRole('read')")
+                        .antMatchers("/me").authenticated()
                         .antMatchers("/api/register").permitAll()
                         .antMatchers("/api/activate").permitAll()
                         .antMatchers("/api/authenticate").permitAll()

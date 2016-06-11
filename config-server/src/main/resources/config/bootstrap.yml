@@ -1,5 +1,9 @@
-mail:
-  domain: gmail.com
+server:
+  port: 18888
+
+spring:
+  application:
+    name: configserver
 
 eureka:
   client:

@@ -1,32 +1,16 @@
-# Define the port where the API gateway server would be running
-server:
-  port: 8765
-
-spring:
-  application:
-    name: gateway
-  cloud:
-    config:
-      uri: http://admin:admin@127.0.0.1:18761
-  messages:
-    basename: i18n/messages
-  mvc:
-    favicon:
-      enabled: false
-
-management:
-  context-path: /management
-  health:
-    mail:
-      enabled: false
+logging:
+  level:
+     org:
+       springframework:
+         security: DEBUG
 
 security:
   basic:
     enabled: false
   oauth2:
     client:
-      user-authorization-uri: /uaa/oauth/authorize
-      access-token-uri: /uaa/oauth/token
+      access-token-uri: http://127.0.0.1:19999/uaa/oauth/token
+      user-authorization-uri: http://127.0.0.1:19999/uaa/oauth/authorize
       client-id: client
       client-secret: security
     resource:
@@ -41,16 +25,10 @@ security:
           naAPU2gNkECwBJmsAhr02/lXmlmgeuQ/N2tCFvHZQHCTbKe/JK+tIMO73Qn8AgLZ
           0QIDAQAB
           -----END PUBLIC KEY-----
-
+      id: openid
 project:
   mail:
     from: uaa@localhost
-  security:
-    authentication:
-      jwt:
-        secret: my-secret-token-to-change-in-production
-        # Token is valid 24 hours
-        tokenValidityInSeconds: 86400
 # Note that we don't proxy the calls to the authorization server. The reason being that
 # Spring cloud security would need to secure the api gateway before it can route the
 # requests using zuul
@@ -58,9 +36,11 @@ zuul:
   routes:
     user-webservice: /user/**
     task-webservice: /task/**
+    COMMENTSERVICE: /comment/**
     authserver:
-      sensitiveHeaders:
       path: /uaa/**
-      stripPrefix: true
-    portal: /**
+    portal: /portal/**
+    user:
+      path: /me/**
+      url: http://127.0.0.1:19999/uaa/me
   add-proxy-headers: true

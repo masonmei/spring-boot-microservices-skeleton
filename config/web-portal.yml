@@ -1,7 +1,2 @@
 server:
   port: 8090
-  
-eureka:
-  client:
-    serviceUrl:
-      defaultZone: http://admin:admin@127.0.0.1:18761/eureka/

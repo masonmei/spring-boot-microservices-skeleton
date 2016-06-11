@@ -1,0 +1,9 @@
+spring:
+  application:
+    name: commentservice
+  cloud:
+    config:
+      uri: http://127.0.0.1:18888
+server:
+  port: 18081
+  context-path: /comment

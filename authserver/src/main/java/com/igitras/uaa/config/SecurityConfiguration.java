@@ -63,7 +63,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     public void configure(HttpSecurity http) throws Exception {
         // @formatter:off
         http.formLogin().loginPage("/login").permitAll().and().authorizeRequests()
-					.anyRequest().authenticated();;
+					.anyRequest().authenticated();
         // @formatter:on
     }
 }

@@ -32,7 +32,7 @@ public class CommentController {
                 new CommentDto("task22", "comment on task22", FORMATTER.parse("2015-03-05")));
     }
 
-    @RequestMapping(value = "/{taskId}", method = RequestMethod.GET, consumes = {APPLICATION_JSON_UTF8_VALUE})
+    @RequestMapping(value = "/{taskId}", method = RequestMethod.GET)
     public List<CommentDto> getCommentsByTaskId(@PathVariable("taskId") String taskId) {
         List<CommentDto> commentListToReturn = new ArrayList<>();
         for (CommentDto currentComment : comments) {

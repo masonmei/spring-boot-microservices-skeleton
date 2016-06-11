@@ -1,5 +1,5 @@
 server:
-  port: 18761
+  port: 17777
 
 management:
   context-path: /management

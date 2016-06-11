@@ -14,14 +14,12 @@ import org.springframework.security.web.csrf.CsrfFilter;
 import org.springframework.security.web.csrf.CsrfToken;
 import org.springframework.security.web.csrf.CsrfTokenRepository;
 import org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-import org.springframework.security.web.util.matcher.RequestMatcher;
 import org.springframework.web.filter.OncePerRequestFilter;
 import org.springframework.web.util.UriComponentsBuilder;
+import org.springframework.web.util.WebUtils;
 
 import java.io.IOException;
 import java.util.Map;
-import java.util.regex.Pattern;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -37,6 +35,16 @@ import javax.servlet.http.HttpServletResponse;
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     private static final String CSRF_COOKIE_NAME = "XSRF-TOKEN";
     private static final String CSRF_HEADER_NAME = "X-XSRF-TOKEN";
+
+
+    @Override
+    public void configure(HttpSecurity http) throws Exception {
+        http.logout().and().antMatcher("/**").authorizeRequests()
+                .antMatchers("/index.html", "/home.html", "/", "/login").permitAll()
+                .anyRequest().authenticated()
+                .and().csrf().csrfTokenRepository(csrfTokenRepository())
+                .and().addFilterAfter(csrfHeaderFilter(), CsrfFilter.class);
+    }
 
     @Bean
     @Primary
@@ -68,60 +76,21 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         };
     }
 
-    @Override
-    public void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests()
-                .antMatchers("/uaa/**", "/login")
-                .permitAll()
-                .anyRequest()
-                .authenticated()
-                .and()
-                .csrf()
-                .requireCsrfProtectionMatcher(csrfRequestMatcher())
-                .csrfTokenRepository(csrfTokenRepository())
-                .and()
-                .addFilterAfter(csrfHeaderFilter(), CsrfFilter.class)
-                .logout()
-                .permitAll()
-                .logoutSuccessUrl("/");
-    }
-
-    private RequestMatcher csrfRequestMatcher() {
-        return new RequestMatcher() {
-            // Always allow the HTTP GET method
-            private final Pattern allowedMethods = Pattern.compile("^(GET|HEAD|OPTIONS|TRACE)$");
-
-            // Disable CSFR protection on the following urls:
-            private final AntPathRequestMatcher[] requestMatchers = {new AntPathRequestMatcher("/uaa/**")};
-
-            @Override
-            public boolean matches(HttpServletRequest request) {
-                if (allowedMethods.matcher(request.getMethod())
-                        .matches()) {
-                    return false;
-                }
-
-                for (AntPathRequestMatcher matcher : requestMatchers) {
-                    if (matcher.matches(request)) {
-                        return false;
-                    }
-                }
-                return true;
-            }
-        };
-    }
-
     private static Filter csrfHeaderFilter() {
         return new OncePerRequestFilter() {
             @Override
             protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
                     FilterChain filterChain) throws ServletException, IOException {
-                CsrfToken csrf = (CsrfToken) request.getAttribute(CsrfToken.class.getName());
+                CsrfToken csrf = (CsrfToken) request
+                        .getAttribute(CsrfToken.class.getName());
                 if (csrf != null) {
-                    Cookie cookie = new Cookie(CSRF_COOKIE_NAME, csrf.getToken());
-                    cookie.setPath("/");
-                    cookie.setSecure(true);
-                    response.addCookie(cookie);
+                    Cookie cookie = WebUtils.getCookie(request, CSRF_COOKIE_NAME);
+                    String token = csrf.getToken();
+                    if (cookie == null || token != null && !token.equals(cookie.getValue())) {
+                        cookie = new Cookie(CSRF_COOKIE_NAME, token);
+                        cookie.setPath("/");
+                        response.addCookie(cookie);
+                    }
                 }
                 filterChain.doFilter(request, response);
             }
