@@ -4,14 +4,14 @@
 eureka:
   client:
     serviceUrl:
-      defaultZone: http://admin:admin@localhost:18761/eureka/
+      defaultZone: http://admin:admin@127.0.0.1:18761/eureka/
 
 # Datasource and JPA configuration to be used for storing the OAuth authorization details 
 # and token store
 spring:
   datasource:
     data-source-class-name: com.mysql.jdbc.jdbc2.optional.MysqlDataSource
-    url: jdbc:mysql://localhost:3306/auth
+    url: jdbc:mysql://127.0.0.1:3306/auth
     username: root
     password: root
 
@@ -22,7 +22,7 @@ spring:
 #    hibernate:
 #      ddl-auto: create
   mail:
-    host: localhost
+    host: 127.0.0.1
     port: 25
     username:
     password:

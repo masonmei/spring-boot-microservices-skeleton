@@ -6,7 +6,7 @@ spring:
     name: authserver
   cloud:
     config:
-      uri: http://admin:admin@localhost:18761
+      uri: http://admin:admin@127.0.0.1:18761
   messages:
     basename: i18n/messages
   mvc:

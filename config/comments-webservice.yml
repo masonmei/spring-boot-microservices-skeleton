@@ -4,11 +4,11 @@ server:
 eureka:
   client:
     serviceUrl:
-      defaultZone: http://localhost:8761/eureka/
+      defaultZone: http://admin:admin@127.0.0.1:18761/eureka/
       
 # The OAuth2 server definition that would be used to send the authorization requests to
 authserver:
-    hostname: localhost
+    hostname: 127.0.0.1
     port: 8899
     contextPath: uua
 

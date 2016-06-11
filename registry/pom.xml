@@ -13,7 +13,7 @@
     <dependencies>
 
         <dependency>
-            <groupId>com.igitras</groupId>
+            <groupId>com.igitras.common</groupId>
             <artifactId>common</artifactId>
             <version>${project.version}</version>
         </dependency>
