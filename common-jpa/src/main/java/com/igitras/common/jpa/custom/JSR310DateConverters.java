@@ -1,4 +1,4 @@
-package com.igitras.common.custom.datetime;
+package com.igitras.common.jpa.custom;
 
 import org.springframework.core.convert.converter.Converter;
 

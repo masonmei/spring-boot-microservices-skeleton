@@ -4,6 +4,7 @@ import com.igitras.common.prop.AppProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
@@ -12,8 +13,9 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.E
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
-import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
+import org.springframework.security.oauth2.provider.token.store.KeyStoreKeyFactory;
 
+import java.security.KeyPair;
 import javax.sql.DataSource;
 
 /**
@@ -27,9 +29,6 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
     private AuthenticationManager authenticationManager;
 
     @Autowired
-    private AppProperties properties;
-
-    @Autowired
     private DataSource dataSource;
 
     @Autowired
@@ -37,27 +36,27 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
 
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
-//        clients.withClientDetails(new UaaClientDetailsService());
         clients.jdbc(dataSource);
     }
 
     @Override
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
-        endpoints.tokenStore(tokenStore()).tokenEnhancer(jwtTokenEnhancer()).authenticationManager(authenticationManager);
+        endpoints.authenticationManager(authenticationManager)
+                .accessTokenConverter(jwtAccessTokenConverter());
     }
 
     @Override
     public void configure(AuthorizationServerSecurityConfigurer security) throws Exception {
-        security.passwordEncoder(passwordEncoder);
+        security.passwordEncoder(passwordEncoder).allowFormAuthenticationForClients();
     }
-
-    /**
-     * Apply the token converter (and enhander) for token store.
-     */
-    @Bean
-    public JwtTokenStore tokenStore() {
-        return new JwtTokenStore(jwtTokenEnhancer());
-    }
+    //
+    //    /**
+    //     * Apply the token converter (and enhander) for token store.
+    //     */
+    //    @Bean
+    //    public JwtTokenStore tokenStore() {
+    //        return new JwtTokenStore(jwtTokenEnhancer());
+    //    }
 
     /**
      * This bean generates an token enhancer, which manages the exchange between JWT acces tokens and Authentication
@@ -66,9 +65,13 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
      * @return an access token converter configured with JHipsters secret key
      */
     @Bean
-    public JwtAccessTokenConverter jwtTokenEnhancer() {
+    public JwtAccessTokenConverter jwtAccessTokenConverter() {
         JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
-        converter.setSigningKey(properties.getSecurity().getAuthentication().getJwt().getSecret());
+        //        converter.setSigningKey(properties.getSecurity().getAuthentication().getJwt().getSecret());
+        KeyPair keyPair =
+                new KeyStoreKeyFactory(new ClassPathResource("server.jks"), "igitras".toCharArray()).getKeyPair(
+                        "igitras", "mdxayjy".toCharArray());
+        converter.setKeyPair(keyPair);
         return converter;
     }
 

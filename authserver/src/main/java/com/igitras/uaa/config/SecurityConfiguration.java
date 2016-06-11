@@ -1,13 +1,18 @@
 package com.igitras.uaa.config;
 
+import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
+
 import com.igitras.uaa.custom.security.UaaUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.actuate.autoconfigure.ManagementServerProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -18,6 +23,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
  */
 @Configuration
 @EnableGlobalMethodSecurity(prePostEnabled = true, proxyTargetClass = true)
+@Order(ManagementServerProperties.ACCESS_OVERRIDE_ORDER)
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Autowired
@@ -53,4 +59,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/h2-console/**");
     }
 
+    @Override
+    public void configure(HttpSecurity http) throws Exception {
+        // @formatter:off
+        http.formLogin().loginPage("/login").permitAll().and().authorizeRequests()
+					.anyRequest().authenticated();;
+        // @formatter:on
+    }
 }

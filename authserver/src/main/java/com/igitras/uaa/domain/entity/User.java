@@ -3,7 +3,7 @@ package com.igitras.uaa.domain.entity;
 import static com.igitras.common.utils.Constants.Constrains.LOGIN_REGEX;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.igitras.common.domain.entity.AuditingEntity;
+import com.igitras.common.jpa.domain.entity.AuditingEntity;
 import org.hibernate.validator.constraints.Email;
 
 import java.time.ZonedDateTime;
@@ -11,7 +11,6 @@ import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;

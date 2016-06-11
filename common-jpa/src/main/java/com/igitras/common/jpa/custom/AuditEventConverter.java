@@ -1,6 +1,6 @@
-package com.igitras.common.custom.audit;
+package com.igitras.common.jpa.custom;
 
-import com.igitras.common.domain.entity.PersistentAuditEvent;
+import com.igitras.common.jpa.domain.entity.PersistentAuditEvent;
 import org.springframework.boot.actuate.audit.AuditEvent;
 import org.springframework.security.web.authentication.WebAuthenticationDetails;
 import org.springframework.stereotype.Component;
@@ -44,7 +44,9 @@ public class AuditEventConverter {
      * @return the converted list.
      */
     public AuditEvent convertToAuditEvent(PersistentAuditEvent persistentAuditEvent) {
-        Instant instant = persistentAuditEvent.getAuditEventDate().atZone(ZoneId.systemDefault()).toInstant();
+        Instant instant = persistentAuditEvent.getAuditEventDate()
+                .atZone(ZoneId.systemDefault())
+                .toInstant();
         return new AuditEvent(Date.from(instant), persistentAuditEvent.getPrincipal(),
                 persistentAuditEvent.getAuditEventType(), convertDataToObjects(persistentAuditEvent.getData()));
     }

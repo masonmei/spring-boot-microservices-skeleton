@@ -1,4 +1,5 @@
-package com.igitras.common.domain.entity;
+package com.igitras.common.jpa.domain.entity;
+
 
 import java.time.LocalDateTime;
 import java.util.HashMap;

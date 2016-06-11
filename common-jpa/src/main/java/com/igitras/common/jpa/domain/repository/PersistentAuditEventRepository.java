@@ -1,6 +1,6 @@
-package com.igitras.common.domain.repository;
+package com.igitras.common.jpa.domain.repository;
 
-import com.igitras.common.domain.entity.PersistentAuditEvent;
+import com.igitras.common.jpa.domain.entity.PersistentAuditEvent;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;

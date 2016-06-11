@@ -10,15 +10,15 @@ eureka:
 # and token store
 spring:
   datasource:
+    data-source-class-name: com.mysql.jdbc.jdbc2.optional.MysqlDataSource
     url: jdbc:mysql://localhost:3306/auth
     username: root
     password: root
-    driver-class: com.mysql.jdbc.Driver
-  
+
   jpa:
     database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
     database: MYSQL
-    show-sql: false
+    show_sql: true
 #    hibernate:
 #      ddl-auto: create
   mail:

@@ -1,4 +1,4 @@
-package com.igitras.common.domain.entity;
+package com.igitras.common.jpa.domain.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.data.annotation.CreatedBy;

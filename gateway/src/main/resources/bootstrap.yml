@@ -1,6 +1,57 @@
+# Define the port where the API gateway server would be running
+server:
+  port: 8765
+
 spring:
   application:
-    name: api-gateway
+    name: gateway
   cloud:
     config:
-      uri: http://localhost:18671
+      uri: http://admin:admin@localhost:18761
+  messages:
+    basename: i18n/messages
+  mvc:
+    favicon:
+      enabled: false
+
+management:
+  context-path: /management
+  health:
+    mail:
+      enabled: false
+
+security:
+  basic:
+    enabled: false
+  oauth2:
+    sso:
+      login-path: /login
+    client:
+      user-authorization-uri: /uaa/oauth/authorize
+      access-token-uri: /uaa/oauth/token
+      client-id: gateway
+      client-secret: gateway
+    resource:
+      token-info-uri:
+project:
+  mail:
+    from: uaa@localhost
+  security:
+    authentication:
+      jwt:
+        secret: my-secret-token-to-change-in-production
+        # Token is valid 24 hours
+        tokenValidityInSeconds: 86400
+# Note that we don't proxy the calls to the authorization server. The reason being that
+# Spring cloud security would need to secure the api gateway before it can route the
+# requests using zuul
+zuul:
+  routes:
+    user-webservice: /user/**
+    task-webservice: /task/**
+    authserver:
+      sensitiveHeaders:
+      path: /uaa/**
+      stripPrefix: true
+    portal: /**
+  add-proxy-headers: true

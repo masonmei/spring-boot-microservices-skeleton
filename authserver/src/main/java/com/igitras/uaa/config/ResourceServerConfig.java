@@ -1,6 +1,7 @@
 package com.igitras.uaa.config;
 
-import static com.igitras.common.utils.Constants.Authority.ADMIN;
+import static org.springframework.security.config.http.SessionCreationPolicy.IF_REQUIRED;
+import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -20,19 +21,15 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
     @Override
     public void configure(HttpSecurity http) throws Exception {
         // @formatter:off
-         http.exceptionHandling().accessDeniedPage("/login?authorization_error=true")
-                .and().csrf().ignoringAntMatchers("/api/**", "/management/**", "/oauth/**")
-                .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and().logout().logoutUrl("/logout").logoutSuccessUrl("/login")
-                .and().formLogin().loginPage("/login").failureUrl("/login?authorization_error=true")
-                .and() .authorizeRequests()
-                        .antMatchers("/login/**").permitAll()
+        http.requestMatchers().antMatchers("/me")
+                .and().authorizeRequests()
+                        .antMatchers("/me").access("#oauth2.hasRole('read')")
                         .antMatchers("/api/register").permitAll()
                         .antMatchers("/api/activate").permitAll()
                         .antMatchers("/api/authenticate").permitAll()
                         .antMatchers("/api/account/reset_password/init").permitAll()
                         .antMatchers("/api/account/reset_password/finish").permitAll()
-//                        .antMatchers("/management/**").hasAuthority(ADMIN)
+        //                        .antMatchers("/management/**").hasAuthority(ADMIN)
                         .antMatchers("/management/**").permitAll()
                         .antMatchers("/api/**").authenticated()
                         .antMatchers("/v2/api-docs/**").permitAll()

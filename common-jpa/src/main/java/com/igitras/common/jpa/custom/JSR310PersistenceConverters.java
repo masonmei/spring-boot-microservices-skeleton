@@ -1,9 +1,10 @@
-package com.igitras.common.custom.datetime;
+package com.igitras.common.jpa.custom;
 
-import com.igitras.common.custom.datetime.JSR310DateConverters.DateToLocalDateTimeConverter;
-import com.igitras.common.custom.datetime.JSR310DateConverters.DateToZonedDateTimeConverter;
-import com.igitras.common.custom.datetime.JSR310DateConverters.LocalDateTimeToDateConverter;
-import com.igitras.common.custom.datetime.JSR310DateConverters.ZonedDateTimeToDateConverter;
+
+import com.igitras.common.jpa.custom.JSR310DateConverters.DateToLocalDateTimeConverter;
+import com.igitras.common.jpa.custom.JSR310DateConverters.DateToZonedDateTimeConverter;
+import com.igitras.common.jpa.custom.JSR310DateConverters.LocalDateTimeToDateConverter;
+import com.igitras.common.jpa.custom.JSR310DateConverters.ZonedDateTimeToDateConverter;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
