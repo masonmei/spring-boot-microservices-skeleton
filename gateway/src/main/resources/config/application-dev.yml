@@ -9,8 +9,8 @@ security:
     enabled: false
   oauth2:
     client:
-      access-token-uri: http://127.0.0.1:19999/uaa/oauth/token
-      user-authorization-uri: http://127.0.0.1:19999/uaa/oauth/authorize
+      access-token-uri: /uaa/oauth/token
+      user-authorization-uri: /uaa/oauth/authorize
       client-id: client
       client-secret: security
     resource:
@@ -33,14 +33,19 @@ project:
 # Spring cloud security would need to secure the api gateway before it can route the
 # requests using zuul
 zuul:
-  routes:
-    user-webservice: /user/**
-    task-webservice: /task/**
-    COMMENTSERVICE: /comment/**
-    authserver:
-      path: /uaa/**
-    portal: /portal/**
-    user:
-      path: /me/**
-      url: http://127.0.0.1:19999/uaa/me
-  add-proxy-headers: true
+#  routes:
+#    authserver: /uaa/**
+#  routes:
+#    user-webservice: /user/**
+#    task-webservice: /task/**
+#    COMMENTSERVICE: /comment/**
+#    authserver:
+#      path: /uaa/**
+#    portal: /portal/**
+#    user:
+#      path: /me/**
+#      url: http://127.0.0.1:19999/uaa/me
+#  add-proxy-headers: true
+ribbon:
+  connectTimeout: 1000
+  readTimeout: 3000

@@ -1,6 +1,5 @@
 server:
   port: 19999
-  context-path: /uaa
 
 spring:
   application:

@@ -1,11 +1,16 @@
 package com.igitras.gateway.config;
 
+import static com.igitras.common.utils.Constants.Authority.ADMIN;
+
 import org.springframework.boot.autoconfigure.security.oauth2.client.EnableOAuth2Sso;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.oauth2.client.filter.OAuth2ClientContextFilter;
 import org.springframework.security.oauth2.client.resource.UserRedirectRequiredException;
 import org.springframework.security.web.DefaultRedirectStrategy;
@@ -36,14 +41,31 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     private static final String CSRF_COOKIE_NAME = "XSRF-TOKEN";
     private static final String CSRF_HEADER_NAME = "X-XSRF-TOKEN";
 
+    @Override
+    public void configure(WebSecurity web) throws Exception {
+        web.ignoring()
+                .antMatchers(HttpMethod.OPTIONS, "/**")
+                .antMatchers("/app/**/*.{js,html}")
+                .antMatchers("/dep/**")
+                .antMatchers("/i18n/**")
+                .antMatchers("/content/**")
+                .antMatchers("/swagger-ui/index.html")
+                .antMatchers("/test/**")
+                .antMatchers("/h2-console/**")
+                .antMatchers("/index.html", "/");
+    }
 
     @Override
     public void configure(HttpSecurity http) throws Exception {
-        http.logout().and().antMatcher("/**").authorizeRequests()
-                .antMatchers("/index.html", "/home.html", "/", "/login").permitAll()
-                .anyRequest().authenticated()
-                .and().csrf().csrfTokenRepository(csrfTokenRepository())
-                .and().addFilterAfter(csrfHeaderFilter(), CsrfFilter.class);
+        // @formatter:off
+        http.logout()
+                .and().csrf().disable().headers().frameOptions().disable()
+                .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and().authorizeRequests()
+                        .antMatchers("/api/**").authenticated()
+                        .antMatchers("/management/**").hasAuthority(ADMIN)
+                        .antMatchers("/configuration/ui").permitAll();
+        // @formatter:on
     }
 
     @Bean

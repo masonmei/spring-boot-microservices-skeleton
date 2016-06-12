@@ -141,7 +141,8 @@ local.properties
 .texlipse
 
 # Created by .ignore support plugin (hsz.mobi)
-.gitattributes
-gulp/
-node_modules/
-src/main/
+
+*/etc/
+*/node/
+*/node_modules/
+*/src/main/resources/public/dep/

@@ -1,4 +1,4 @@
-package com.igitras;
+package com.igitras.config;
 
 import com.igitras.common.BaseApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
