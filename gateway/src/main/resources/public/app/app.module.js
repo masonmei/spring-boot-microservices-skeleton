@@ -16,6 +16,8 @@
             'ui.router',
             'infinite-scroll',
             // jhipster-needle-angularjs-add-module JHipster will add new module here
+            'satellizer',
+            // add here
             'angular-loading-bar'
         ])
         .run(run);
@@ -25,5 +27,6 @@
     function run(stateHandler, translationHandler) {
         stateHandler.initialize();
         translationHandler.initialize();
+
     }
 })();
