@@ -3,7 +3,9 @@ spring:
     config:
       server:
         native:
-          search-locations: file:/Users/mason/Individual/spring-boot-microservices-skeleton/config
+#          search-locations: file:/Users/mason/Individual/spring-boot-microservices-skeleton/config
+          search-locations: file:/Users/mason/Workspaces/github/spring-boot-microservices-skeleton/config
+
 #        git:
 #          uri: https://github.com/anilallewar/sample-config
 # While in development mode, you can configure the config server to pick up configuration files from

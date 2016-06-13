@@ -1,11 +1,7 @@
 package com.igitras.uaa.config;
 
-import static org.springframework.security.config.http.SessionCreationPolicy.IF_REQUIRED;
-import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
-
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configurers.ResourceServerSecurityConfigurer;
@@ -21,9 +17,8 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
     @Override
     public void configure(HttpSecurity http) throws Exception {
         // @formatter:off
-        http.requestMatchers().antMatchers("/me")
+        http.requestMatchers().antMatchers("/api/account")
                 .and().authorizeRequests()
-                        .antMatchers("/me").authenticated()
                         .antMatchers("/api/register").permitAll()
                         .antMatchers("/api/activate").permitAll()
                         .antMatchers("/api/authenticate").permitAll()

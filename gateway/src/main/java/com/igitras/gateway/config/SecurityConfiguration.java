@@ -59,13 +59,19 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     public void configure(HttpSecurity http) throws Exception {
         // @formatter:off
         http.logout()
-                .and().csrf().disable().headers().frameOptions().disable()
-                .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and().authorizeRequests()
-                        .antMatchers("/api/**").authenticated()
+                .and().antMatcher("/**").authorizeRequests()
+                        .antMatchers("/404.html", "/login").permitAll()
+//                        .antMatchers("/api/**").authenticated()
 //                        .antMatchers("/management/**").hasAuthority(ADMIN)
-                        .antMatchers("/configuration/ui").permitAll();
-        // @formatter:on
+                        .antMatchers("/management/**").permitAll()
+                        .antMatchers("/uaa/uaa/oauth/**").permitAll()
+                        .antMatchers("/uaa/oauth/**").permitAll()
+                        .antMatchers("/**/oauth/token").permitAll()
+                        .antMatchers("/api/gateway/routes**").permitAll()
+                        .antMatchers("/configuration/ui").permitAll()
+                .and().csrf().disable().headers().frameOptions().disable();
+//                .and().addFilterAfter(csrfHeaderFilter(), CsrfFilter.class);
+//         @formatter:on
     }
 
     @Bean
