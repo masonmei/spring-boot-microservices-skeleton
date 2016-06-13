@@ -36,7 +36,7 @@ public class OAuthPasswordFilter extends ZuulFilter {
                 .getParameterValues("grant_type");
         String serviceId = (String) ctx.get("serviceId");
         return (ctx.getRouteHost() == null && serviceId != null && ctx.sendZuulResponse() && serviceId
-                .equals("AUTHSERVER") && isTokenRequest(requestURI, grantTypes));
+                .equalsIgnoreCase("AUTHSERVER") && isTokenRequest(requestURI, grantTypes));
     }
 
     private boolean isTokenRequest(String requestUri, String... grantTypes) {
@@ -54,10 +54,10 @@ public class OAuthPasswordFilter extends ZuulFilter {
     @Override
     public Object run() {
         RequestContext ctx = RequestContext.getCurrentContext();
-        ctx.getRequestQueryParams()
-                .put("client_id", singletonList(properties.getClientId()));
-        ctx.getRequestQueryParams()
-                .put("client_secret", singletonList(properties.getClientSecret()));
+        ctx.getRequest().getParameterMap()
+                .put("client_id", new String[]{properties.getClientId()});
+        ctx.getRequest().getParameterMap()
+                .put("client_secret", new String[]{properties.getClientSecret()});
         return null;
     }
 }

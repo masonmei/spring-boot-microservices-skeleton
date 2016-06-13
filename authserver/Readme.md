@@ -1,6 +1,6 @@
 keytool -genkeypair -keyalg RSA -alias igitras -keypass mdxayjy -keystore server.jks -storepass igitras
 
-keytool -export -keystore server.jks -alias igitras -f igitras.cer
+keytool -export -keystore server.jks -alias igitras -file igitras.cer
 
 
 openssl x509 -inform der -in igitras.cer -pubkey -noout
