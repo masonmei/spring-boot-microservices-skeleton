@@ -39,14 +39,19 @@ zuul:
 #    COMMENTSERVICE: /comment/**
     AUTHSERVER:
       path: /uaa/**
+      strip-prefix: false
 #    portal: /portal/**
-    user:
-      path: /user/**
-      url: http://localhost:19999/uaa/api/account
+#    user:
+#      path: /user/**
+#      url: http://localhost:19999/uaa/api/account
   add-proxy-headers: true
+  strip-prefix: false
 ribbon:
   connectTimeout: 1000
   readTimeout: 3000
 spring:
   aop:
     proxy-target-class: true
+  pid:
+    fail-on-write-error: true
+    file: ${spring.application.name}.pid
