@@ -5,6 +5,7 @@ import static org.springframework.util.StringUtils.hasText;
 
 import static java.lang.String.format;
 
+import org.apache.catalina.util.ParameterMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.oauth2.OAuth2ClientProperties;
 import org.springframework.boot.context.embedded.FilterRegistrationBean;
@@ -70,7 +71,7 @@ public class WebConfiguration extends WebMvcConfigurerAdapter {
 
                         @Override
                         public Map<String, String[]> getParameterMap() {
-                            Map<String, String[]> params = super.getParameterMap();
+                            Map<String, String[]> params = new ParameterMap<>(super.getParameterMap());
                             params.put("client_id", new String[]{properties.getClientId()});
                             if (hasText(properties.getClientSecret())) {
                                 params.put("client_secret", new String[]{properties.getClientId()});
