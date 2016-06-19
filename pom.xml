@@ -31,6 +31,9 @@
         <maven-enforcer-plugin.version>1.4.1</maven-enforcer-plugin.version>
         <maven-processor-plugin.version>3.1.0</maven-processor-plugin.version>
 
+        <timestamp>${maven.build.timestamp}</timestamp>
+        <maven.build.timestamp.format>yyyyMMddHHmmss</maven.build.timestamp.format>
+
         <!-- plugins version-->
         <sortpom-maven-plugin.version>2.5.0</sortpom-maven-plugin.version>
         <spring-boot.version>1.3.5.RELEASE</spring-boot.version>
@@ -316,9 +319,14 @@
                     <artifactId>docker-maven-plugin</artifactId>
                     <version>${docker-maven.version}</version>
                     <configuration>
-                        <imageName>${project.build.finalName}</imageName>
-                        <baseImage>igitras/java8</baseImage>
-                        <entryPoint>["java", "-jar", "/application/${project.artifactId}/${project.build.finalName}.jar"]</entryPoint>
+                        <imageName>igitras/blog/${project.artifactId}</imageName>
+                        <dockerDirectory>src/main/docker</dockerDirectory>
+                        <imageTags>
+                            <imageTag>${timestamp}</imageTag>
+                        </imageTags>
+                        <!--<entryPoint>["java", "-jar",-->
+                            <!--"/application/${project.artifactId}/${project.build.finalName}.jar"]-->
+                        <!--</entryPoint>-->
                         <resources>
                             <resource>
                                 <targetPath>/application/${project.artifactId}/</targetPath>
@@ -327,6 +335,15 @@
                             </resource>
                         </resources>
                     </configuration>
+                    <executions>
+                        <execution>
+                            <id>build-image</id>
+                            <phase>package</phase>
+                            <goals>
+                                <goal>build</goal>
+                            </goals>
+                        </execution>
+                    </executions>
                 </plugin>
             </plugins>
         </pluginManagement>
