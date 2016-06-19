@@ -1,19 +1,19 @@
 'use strict';
 
 describe('Service Tests', function () {
+    beforeEach(mockApiAccountCall);
     beforeEach(mockI18nCalls);
     beforeEach(mockScriptsCalls);
 
     describe('Auth', function () {
-        var $httpBackend, spiedLocalStorageService, authService, spiedAuthServerProvider;
+        var $httpBackend, localStorageService, sessionStorageService, authService, spiedAuthServerProvider;
 
-        beforeEach(inject(function($injector, localStorageService, Auth, AuthServerProvider) {
+        beforeEach(inject(function($injector, $localStorage, $sessionStorage, Auth, AuthServerProvider) {
             $httpBackend = $injector.get('$httpBackend');
-            spiedLocalStorageService = localStorageService;
+            localStorageService = $localStorage;
+            sessionStorageService = $sessionStorage;
             authService = Auth;
             spiedAuthServerProvider = AuthServerProvider;
-
-            $httpBackend.expectPOST(/api\/logout\?cacheBuster=\d+/).respond(200, '');
         }));
         //make sure no expectations were missed in your tests.
         //(e.g. expectGET or expectPOST)
@@ -21,12 +21,10 @@ describe('Service Tests', function () {
             $httpBackend.verifyNoOutstandingExpectation();
             $httpBackend.verifyNoOutstandingRequest();
         });
-        
         it('should call backend on logout then call authServerProvider.logout', function(){
             //GIVEN
             //Set spy
             spyOn(spiedAuthServerProvider, 'logout').and.callThrough();
-            spyOn(spiedLocalStorageService, "clearAll").and.callThrough();
 
             //WHEN
             authService.logout();
@@ -35,8 +33,8 @@ describe('Service Tests', function () {
 
             //THEN
             expect(spiedAuthServerProvider.logout).toHaveBeenCalled();
-            expect(spiedLocalStorageService.clearAll).toHaveBeenCalled();
+            expect(localStorageService.authenticationToken).toBe(undefined);
+            expect(sessionStorageService.authenticationToken).toBe(undefined);
         });
-
     });
 });
