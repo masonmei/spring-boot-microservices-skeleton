@@ -1,7 +1,7 @@
 # Set the base image
 FROM igitras/java8
 
-add *.jar /application/gateway/gateway.jar
+add /application/gateway/gateway*.jar /application/gateway/gateway.jar
 
 RUN mkdir /application/gateway -p \
     && cd /application/gateway \

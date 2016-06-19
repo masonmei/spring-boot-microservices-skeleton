@@ -319,14 +319,8 @@
                     <artifactId>docker-maven-plugin</artifactId>
                     <version>${docker-maven.version}</version>
                     <configuration>
-                        <imageName>igitras/blog/${project.artifactId}</imageName>
+                        <imageName>igitras/blog/${project.artifactId}-${timestamp}</imageName>
                         <dockerDirectory>${project.basedir}/src/main/docker</dockerDirectory>
-                        <imageTags>
-                            <imageTag>${timestamp}</imageTag>
-                        </imageTags>
-                        <!--<entryPoint>["java", "-jar",-->
-                            <!--"/application/${project.artifactId}/${project.build.finalName}.jar"]-->
-                        <!--</entryPoint>-->
                         <resources>
                             <resource>
                                 <targetPath>/application/${project.artifactId}/</targetPath>
