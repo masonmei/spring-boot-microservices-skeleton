@@ -3,3 +3,8 @@ logging:
      org:
        springframework:
          security: DEBUG
+spring:
+  redis:
+    host: localhost
+    database: 3
+

@@ -1,0 +1,16 @@
+spring:
+  datasource:
+    data-source-class-name: com.mysql.jdbc.jdbc2.optional.MysqlDataSource
+    url: jdbc:mysql://127.0.0.1:3306/blog?useUnicode=true&characterEncoding=UTF-8
+    username: root
+    password: root
+
+  jpa:
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+    database: MYSQL
+    show_sql: true
+#    hibernate:
+#      ddl-auto: create
+project:
+  mail:
+    from: uaa@localhost

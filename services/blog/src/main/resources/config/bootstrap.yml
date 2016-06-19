@@ -1,0 +1,9 @@
+spring:
+  application:
+    name: blog
+  cloud:
+    config:
+      uri: http://127.0.0.1:18888
+server:
+  port: 18082
+  context-path: /blog

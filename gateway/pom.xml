@@ -60,9 +60,6 @@
     </dependencies>
 
     <properties>
-        <node.version>v6.1.0</node.version>
-        <npm.version>3.8.9</npm.version>
-        <frontend-maven-plugin.version>1.0</frontend-maven-plugin.version>
     </properties>
 
     <build>
@@ -86,11 +83,6 @@
             <plugin>
                 <groupId>com.github.eirslett</groupId>
                 <artifactId>frontend-maven-plugin</artifactId>
-                <version>${frontend-maven-plugin.version}</version>
-                <configuration>
-                    <nodeVersion>${node.version}</nodeVersion>
-                    <npmVersion>${npm.version}</npmVersion>
-                </configuration>
                 <executions>
                     <execution>
                         <id>install node and npm</id>
@@ -142,46 +134,6 @@
                 </executions>
             </plugin>
         </plugins>
-        <pluginManagement>
-            <plugins>
-                <!--
-                    This plugin's configuration is used to store Eclipse m2e settings only.
-                    It has no influence on the Maven build itself.
-                    Remove when the m2e plugin can correctly bind to Maven lifecycle
-                -->
-                <plugin>
-                    <groupId>org.eclipse.m2e</groupId>
-                    <artifactId>lifecycle-mapping</artifactId>
-                    <version>1.0.0</version>
-                    <configuration>
-                        <lifecycleMappingMetadata>
-                            <pluginExecutions>
-                                <pluginExecution>
-                                    <pluginExecutionFilter>
-                                        <groupId>com.github.eirslett</groupId>
-                                        <artifactId>
-                                            frontend-maven-plugin
-                                        </artifactId>
-                                        <versionRange>
-                                            ${frontend-maven-plugin.version}
-                                        </versionRange>
-                                        <goals>
-                                            <goal>install-node-and-npm</goal>
-                                            <goal>npm</goal>
-                                            <goal>bower</goal>
-                                            <goal>gulp</goal>
-                                        </goals>
-                                    </pluginExecutionFilter>
-                                    <action>
-                                        <ignore/>
-                                    </action>
-                                </pluginExecution>
-                            </pluginExecutions>
-                        </lifecycleMappingMetadata>
-                    </configuration>
-                </plugin>
-            </plugins>
-        </pluginManagement>
     </build>
 
 </project>

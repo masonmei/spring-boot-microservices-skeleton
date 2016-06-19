@@ -1,12 +1,14 @@
 package com.igitras.common.prop;
 
+import static com.igitras.common.utils.Constants.Property.BASE;
+
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.web.cors.CorsConfiguration;
 
 /**
  * @author mason
  */
-@ConfigurationProperties(prefix = "project", ignoreUnknownFields = false)
+@ConfigurationProperties(prefix = BASE)
 public class AppProperties {
     private final Async async = new Async();
 

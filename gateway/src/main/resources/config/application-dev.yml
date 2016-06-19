@@ -9,8 +9,8 @@ security:
     enabled: false
   oauth2:
     client:
-      access-token-uri: http://localhost:19999/uaa/oauth/token
-      user-authorization-uri: http://localhost:19999/uaa/oauth/authorize
+#      access-token-uri: http://localhost:19999/uaa/oauth/token
+#      user-authorization-uri: http://localhost:19999/uaa/oauth/authorize
       client-id: client
       client-secret: security
     resource:
@@ -39,6 +39,9 @@ zuul:
 #    COMMENTSERVICE: /comment/**
     AUTHSERVER:
       path: /uaa/**
+      strip-prefix: false
+    BLOG:
+      path: /blog/**
       strip-prefix: false
 #    portal: /portal/**
 #    user:

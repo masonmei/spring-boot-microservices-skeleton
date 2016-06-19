@@ -5,10 +5,19 @@ package com.igitras.common.utils;
  */
 public abstract class Constants {
 
+    public abstract static class Property {
+        public static final String BASE = "project";
+        public static final String ENABLED = "enabled";
+
+        public static final String SWAGGER_ENABLED = BASE + ".swagger" + ENABLED;
+    }
+
     public abstract static class Profile {
         public static final String DEV = "dev";
         public static final String PROD = "product";
         public static final String NATIVE = "native";
+
+        public static final String NO_SWAGGER = "no-swagger";
     }
 
     public abstract static class Authority {

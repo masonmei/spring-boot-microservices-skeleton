@@ -12,6 +12,7 @@
     <!-- bower:css -->
     <link rel="stylesheet" href="dep/bootstrap/dist/css/bootstrap.css">
     <link rel="stylesheet" href="dep/angular-loading-bar/build/loading-bar.css">
+    <link rel="stylesheet" href="dep/highlightjs/styles/github.css">
     <!-- endinject -->
     <!-- endbuild -->
     <!-- build:css content/css/main.css -->
@@ -68,6 +69,9 @@
     <script src="dep/ng-file-upload/ng-file-upload.js"></script>
     <script src="dep/ngInfiniteScroll/build/ng-infinite-scroll.js"></script>
     <script src="dep/satellizer/satellizer.js"></script>
+    <script src="dep/marked/marked.min.js"></script>
+    <script src="dep/angular-marked/dist/angular-marked.js"></script>
+    <script src="dep/highlightjs/highlight.pack.js"></script>
     <!-- endinject -->
     <!-- endbuild -->
 
@@ -95,6 +99,18 @@
     <script src="app/home/home.state.js"></script>
     <script src="app/home/home.controller.js"></script>
     <script src="app/entities/entity.state.js"></script>
+    <script src="app/entities/tag/tag-dialog.controller.js"></script>
+    <script src="app/entities/tag/tag-detail.controller.js"></script>
+    <script src="app/entities/tag/tag-delete-dialog.controller.js"></script>
+    <script src="app/entities/tag/tag.state.js"></script>
+    <script src="app/entities/tag/tag.service.js"></script>
+    <script src="app/entities/tag/tag.controller.js"></script>
+    <script src="app/entities/blog/blog-dialog.controller.js"></script>
+    <script src="app/entities/blog/blog-detail.controller.js"></script>
+    <script src="app/entities/blog/blog-delete-dialog.controller.js"></script>
+    <script src="app/entities/blog/blog.state.js"></script>
+    <script src="app/entities/blog/blog.service.js"></script>
+    <script src="app/entities/blog/blog.controller.js"></script>
     <script src="app/components/util/truncate-words.filter.js"></script>
     <script src="app/components/util/truncate-characters.filter.js"></script>
     <script src="app/components/util/sort-by.directive.js"></script>
@@ -176,6 +192,7 @@
     <script src="app/account/activate/activate.state.js"></script>
     <script src="app/account/activate/activate.controller.js"></script>
     <script src="app/account/account.state.js"></script>
+
     <!-- endinject -->
     <!-- endbuild -->
 

@@ -1,13 +1,11 @@
-package com.igitras.uaa.web.rest;
+package com.igitras.gateway.mvc.rest;
 
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
 import com.igitras.common.prop.AppProperties;
-import com.netflix.discovery.converters.Auto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
@@ -17,14 +15,13 @@ import java.util.List;
 /**
  * @author mason
  */
-
 @RestController
-@RequestMapping("api/profile-info")
+@RequestMapping("/api/profile-info")
 public class ProfileInfoResource {
     @Autowired
     private Environment env;
 
-    @Auto
+    @Autowired
     private AppProperties properties;
 
     @RequestMapping(method = GET)

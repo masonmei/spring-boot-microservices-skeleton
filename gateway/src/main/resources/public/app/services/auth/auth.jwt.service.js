@@ -53,12 +53,19 @@
                 }
             }).then(function (data) {
                 var accessToken = data.data["access_token"];
-                if (angular.isDefined(accessToken)) {
-                    service.storeAuthenticationToken(accessToken, credentials.rememberMe);
+                var refreshToken = data.data["refresh_token"];
+                if (angular.isDefined(accessToken) && angular.isDefined(refreshToken)) {
+                    service.storeAuthenticationToken(accessToken, refreshToken, credentials.rememberMe);
+                } else if (!angular.isDefined(refreshToken)){
+                    service.storeAuthenticationToken(accessToken, '', credentials.rememberMe);
                 }
             });
         }
 
+        function loginWithRefreshToken() {
+            
+        }
+        
         function loginWithToken(jwt, rememberMe) {
             var deferred = $q.defer();
 
@@ -72,17 +79,22 @@
             return deferred.promise;
         }
 
-        function storeAuthenticationToken(jwt, rememberMe) {
+        function storeAuthenticationToken(jwt, refreshToken, rememberMe) {
             if(rememberMe){
                 $localStorage.authenticationToken = jwt;
+                $localStorage.authenticationRefreshToken = refreshToken;
             } else {
                 $sessionStorage.authenticationToken = jwt;
+                $sessionStorage.authenticationRefreshToken = refreshToken;
             }
         }
 
         function logout () {
             delete $localStorage.authenticationToken;
             delete $sessionStorage.authenticationToken;
+
+            delete $localStorage.authenticationRefreshToken;
+            delete $sessionStorage.authenticationRefreshToken;
         }
     }
 })();

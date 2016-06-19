@@ -1,5 +1,6 @@
 package com.igitras.uaa.config;
 
+import static org.springframework.security.config.http.SessionCreationPolicy.IF_REQUIRED;
 import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
 
 import com.igitras.uaa.custom.security.UaaUserDetailsService;
@@ -17,6 +18,7 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.csrf.CsrfTokenRepository;
 
 /**
  * @author mason
@@ -62,6 +64,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(HttpSecurity http) throws Exception {
         // @formatter:off
+        http.sessionManagement().sessionCreationPolicy(IF_REQUIRED);
+//        http.csrf().csrfTokenRepository(csrfTokenRepository());
         http.formLogin().loginPage("/login")
 //                .permitAll().and().authorizeRequests().anyRequest().authenticated()
         ;
