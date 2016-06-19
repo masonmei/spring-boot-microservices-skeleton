@@ -27,12 +27,10 @@ var handleErrors = require('./gulp/handleErrors'),
     util = require('./gulp/utils'),
     build = require('./gulp/build');
 
-var yorc = require('./.yo-rc.json')['generator-jhipster'];
-
 var config = require('./gulp/config');
 
 gulp.task('clean', function () {
-    return del([config.dist], { dot: true });
+    return del([config.dist], {dot: true});
 });
 
 gulp.task('copy', function () {
@@ -62,7 +60,7 @@ gulp.task('copy', function () {
                 merge: true
             }))
             .pipe(gulp.dest(config.dist)),
-        gulp.src([config.app + 'robots.txt', config.app + 'favicon.ico', config.app + '.htaccess'], { dot: true })
+        gulp.src([config.app + 'robots.txt', config.app + 'favicon.ico', config.app + '.htaccess'], {dot: true})
             .pipe(plumber({errorHandler: handleErrors}))
             .pipe(changed(config.dist))
             .pipe(gulp.dest(config.dist))
@@ -82,17 +80,6 @@ gulp.task('images', function () {
         }))
         .pipe(gulp.dest(config.dist))
         .pipe(browserSync.reload({stream: true}));
-});
-
-
-gulp.task('languages', function () {
-    var locales = yorc.languages.map(function (locale) {
-        return config.bower + 'angular-i18n/angular-locale_' + locale + '.js';
-    });
-    return gulp.src(locales)
-        .pipe(plumber({errorHandler: handleErrors}))
-        .pipe(changed(config.app + 'i18n/'))
-        .pipe(gulp.dest(config.app + 'i18n/'));
 });
 
 gulp.task('styles', [], function () {
@@ -230,7 +217,7 @@ gulp.task('watch', function () {
 });
 
 gulp.task('install', function () {
-    runSequence(['inject:dep', 'ngconstant:dev'], 'languages', 'inject:app', 'inject:troubleshoot');
+    runSequence(['inject:dep', 'ngconstant:dev'], 'inject:app', 'inject:troubleshoot');
 });
 
 gulp.task('serve', function () {
@@ -238,7 +225,7 @@ gulp.task('serve', function () {
 });
 
 gulp.task('build', ['clean'], function (cb) {
-    runSequence(['copy', 'inject:vendor', 'ngconstant:prod', 'languages'], 'inject:app', 'inject:troubleshoot', 'assets:prod', cb);
+    runSequence(['copy', 'inject:vendor', 'ngconstant:prod', 'inject:app', 'inject:troubleshoot', 'assets:prod', cb);
 });
 
 gulp.task('default', ['serve']);
