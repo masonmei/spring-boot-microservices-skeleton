@@ -41,6 +41,7 @@
         <node.version>v6.1.0</node.version>
         <npm.version>3.8.9</npm.version>
         <frontend-maven-plugin.version>1.0</frontend-maven-plugin.version>
+        <docker-maven.version>0.4.10</docker-maven.version>
 
         <springfox.version>2.5.0</springfox.version>
         <cloud-netflix.version>1.1.0.RELEASE</cloud-netflix.version>
@@ -309,6 +310,23 @@
                             <version>${mapstruct.version}</version>
                         </dependency>
                     </dependencies>
+                </plugin>
+                <plugin>
+                    <groupId>com.spotify</groupId>
+                    <artifactId>docker-maven-plugin</artifactId>
+                    <version>${docker-maven.version}</version>
+                    <configuration>
+                        <imageName>${project.build.finalName}</imageName>
+                        <baseImage>igitras/java8</baseImage>
+                        <entryPoint>["java", "-jar", "/application/${project.artifactId}/${project.build.finalName}.jar"]</entryPoint>
+                        <resources>
+                            <resource>
+                                <targetPath>/application/${project.artifactId}/</targetPath>
+                                <directory>${project.build.directory}</directory>
+                                <include>${project.build.finalName}.jar</include>
+                            </resource>
+                        </resources>
+                    </configuration>
                 </plugin>
             </plugins>
         </pluginManagement>
