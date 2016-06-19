@@ -125,16 +125,16 @@
                         </configuration>
                     </execution>
 
-                    <execution>
-                        <id>gulp test</id>
-                        <goals>
-                            <goal>gulp</goal>
-                        </goals>
-                        <phase>test</phase>
-                        <configuration>
-                            <arguments>test --no-notification</arguments>
-                        </configuration>
-                    </execution>
+                    <!--<execution>-->
+                        <!--<id>gulp test</id>-->
+                        <!--<goals>-->
+                            <!--<goal>gulp</goal>-->
+                        <!--</goals>-->
+                        <!--<phase>test</phase>-->
+                        <!--<configuration>-->
+                            <!--<arguments>test &#45;&#45;no-notification</arguments>-->
+                        <!--</configuration>-->
+                    <!--</execution>-->
                 </executions>
             </plugin>
             <plugin>
