@@ -7,7 +7,7 @@
         <version>1.0.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>config-server</artifactId>
+    <artifactId>configserver</artifactId>
 
     <dependencies>
         <dependency>
@@ -42,6 +42,10 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>com.spotify</groupId>
+                <artifactId>docker-maven-plugin</artifactId>
             </plugin>
         </plugins>
     </build>
