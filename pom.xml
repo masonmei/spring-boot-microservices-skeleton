@@ -320,7 +320,7 @@
                     <version>${docker-maven.version}</version>
                     <configuration>
                         <imageName>igitras/blog/${project.artifactId}</imageName>
-                        <dockerDirectory>src/main/docker</dockerDirectory>
+                        <dockerDirectory>${project.basedir}/src/main/docker</dockerDirectory>
                         <imageTags>
                             <imageTag>${timestamp}</imageTag>
                         </imageTags>
