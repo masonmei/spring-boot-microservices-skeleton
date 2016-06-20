@@ -3,23 +3,22 @@
     <link rel="stylesheet" href="css/wro.css"/>
 </head>
 <body>
-<#if RequestParameters['error']??>
-<div class="alert alert-danger">
-    There was a problem logging in. Please try again.
-</div>
-</#if>
-<div class="container">
-    <form role="form" action="login" method="post">
-        <div class="form-group">
-            <label for="username">Username:</label>
-            <input type="text" class="form-control" id="username" name="username"/>
-        </div>
-        <div class="form-group">
-            <label for="password">Password:</label>
-            <input type="password" class="form-control" id="password" name="password"/>
-        </div>
-        <input type="hidden" id="csrf_token" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-        <button type="submit" class="btn btn-primary">Submit</button>
-    </form>
-</div>
+    <div class="wrapper">
+        <form class="form-signin" role="form" action="login" method="post">
+            <h2 class="form-signin-heading">Please login</h2>
+            <#if RequestParameters['error']??>
+                <div class="alert alert-danger">
+                    There was a problem logging in. Please try again.
+                </div>
+            </#if>
+            <input type="text" class="form-control" name="username" placeholder="Username" required="" autofocus="" />
+            <input type="password" class="form-control" name="password" placeholder="Password" required=""/>
+            <label class="checkbox">
+                <input type="checkbox" id="rememberMe" name="remember-me"> Remember me
+            </label>
+            <input type="hidden" id="csrf_token" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+            <button class="btn btn-lg btn-primary btn-block" type="submit">Login</button>
+        </form>
+    </div>
+<#--</div>-->
 </html>

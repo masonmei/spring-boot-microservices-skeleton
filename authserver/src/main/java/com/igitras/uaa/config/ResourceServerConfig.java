@@ -17,18 +17,18 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
     @Override
     public void configure(HttpSecurity http) throws Exception {
         // @formatter:off
-        http.requestMatchers().antMatchers("/api/account")
+        http.requestMatchers().antMatchers("/api/**", "/management/**", "/v2/api-docs/**", "/configuration/ui")
                 .and().authorizeRequests()
-                        .antMatchers("/api/register").permitAll()
-                        .antMatchers("/api/activate").permitAll()
-                        .antMatchers("/api/authenticate").permitAll()
-                        .antMatchers("/api/account/reset_password/init").permitAll()
-                        .antMatchers("/api/account/reset_password/finish").permitAll()
-        //                        .antMatchers("/management/**").hasAuthority(ADMIN)
-                        .antMatchers("/management/**").permitAll()
-                        .antMatchers("/api/**").authenticated()
-                        .antMatchers("/v2/api-docs/**").permitAll()
-                        .antMatchers("/configuration/ui").permitAll();
+                .antMatchers("/api/register").permitAll()
+                .antMatchers("/api/activate").permitAll()
+                .antMatchers("/api/authenticate").permitAll()
+                .antMatchers("/api/account/reset_password/init").permitAll()
+                .antMatchers("/api/account/reset_password/finish").permitAll()
+                //                        .antMatchers("/management/**").hasAuthority(ADMIN)
+                .antMatchers("/management/**").permitAll()
+                .antMatchers("/api/**").authenticated()
+                .antMatchers("/v2/api-docs/**").permitAll()
+                .antMatchers("/configuration/ui").permitAll();
         // @formatter:on
     }
 

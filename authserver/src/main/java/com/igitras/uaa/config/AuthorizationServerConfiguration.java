@@ -50,7 +50,7 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
 
     @Override
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
-        endpoints.authenticationManager(authenticationManager)
+        endpoints.authenticationManager(authenticationManager).tokenStore(tokenStore())
                 .accessTokenConverter(jwtAccessTokenConverter());
     }
 
@@ -70,14 +70,18 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
     //    }
 //
 //    @Bean
-//    public TokenService tokenService(){
-//        return new DefaultTokenServices();
+//    public DefaultTokenServices tokenService(){
+//        DefaultTokenServices defaultTokenServices = new DefaultTokenServices();
+//        defaultTokenServices.setTokenStore(tokenStore());
+//        defaultTokenServices.setTokenEnhancer(jwtAccessTokenConverter());
+//        defaultTokenServices.setReuseRefreshToken(true);
+//        return defaultTokenServices;
 //    }
 //
 //    @Bean
-//    public TokenStore tokenStore() {
-//        return new RedisTokenStore(connectionFactory);
-//    }
+    private TokenStore tokenStore() {
+        return new RedisTokenStore(connectionFactory);
+    }
 
     /**
      * This bean generates an token enhancer, which manages the exchange between JWT acces tokens and Authentication

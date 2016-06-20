@@ -7,4 +7,3 @@ spring:
   redis:
     host: localhost
     database: 3
-
