@@ -42,7 +42,7 @@ CREATE TABLE `authority` (
 --  Records of `authority`
 -- ----------------------------
 BEGIN;
-INSERT INTO `authority` VALUES ('ROLE_ADMIN'), ('ROLE_USER');
+INSERT INTO `authority` VALUES ('ROLE_ADMIN'), ('ROLE_USER'), ('ROLE_DEVELOPER');
 COMMIT;
 
 -- ----------------------------

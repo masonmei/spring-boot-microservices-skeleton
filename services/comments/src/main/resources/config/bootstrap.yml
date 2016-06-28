@@ -1,6 +1,6 @@
 spring:
   application:
-    name: commentservice
+    name: comment
   cloud:
     config:
       uri: http://127.0.0.1:18888

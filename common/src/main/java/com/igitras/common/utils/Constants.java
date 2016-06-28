@@ -36,6 +36,15 @@ public abstract class Constants {
         public static final String LOGIN_REGEX = "^[A-Za-z0-9-_@.]*$";
     }
 
+    public abstract static class Headers {
+        public static final String AUTH_HEADER = "Authorization";
+        public static final String BEARER = "Bearer";
+    }
+
+    public abstract static class Params {
+        public static final String TOKEN = "token";
+    }
+
     public abstract static class Account {
         public static final String SYSTEM = "system";
     }

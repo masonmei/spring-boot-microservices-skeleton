@@ -14,6 +14,7 @@
         <module>tasks</module>
         <module>users</module>
         <module>blog</module>
+        <module>client</module>
     </modules>
 
 </project>

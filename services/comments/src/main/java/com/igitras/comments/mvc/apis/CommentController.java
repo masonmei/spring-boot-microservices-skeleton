@@ -1,8 +1,6 @@
-package com.igitras.mvc.apis;
+package com.igitras.comments.mvc.apis;
 
-import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8_VALUE;
-
-import com.igitras.mvc.dtos.CommentDto;
+import com.igitras.comments.mvc.dtos.CommentDto;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
