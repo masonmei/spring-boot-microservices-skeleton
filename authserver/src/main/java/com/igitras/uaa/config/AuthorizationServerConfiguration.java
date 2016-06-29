@@ -43,6 +43,9 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
     @Autowired
     private RedisConnectionFactory connectionFactory;
 
+    @Autowired
+    private JwtAccessTokenConverter jwtAccessTokenConverter;
+
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
         clients.jdbc(dataSource);
@@ -51,53 +54,19 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
     @Override
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
         endpoints.authenticationManager(authenticationManager).tokenStore(tokenStore())
-                .accessTokenConverter(jwtAccessTokenConverter());
+                .accessTokenConverter(jwtAccessTokenConverter);
     }
 
     @Override
     public void configure(AuthorizationServerSecurityConfigurer security) throws Exception {
         security.passwordEncoder(passwordEncoder)
-                .allowFormAuthenticationForClients();
+                .allowFormAuthenticationForClients()
+                .tokenKeyAccess("permitAll()")
+                .checkTokenAccess("isAuthenticated()");
     }
 
-    //
-    //    /**
-    //     * Apply the token converter (and enhander) for token store.
-    //     */
-    //    @Bean
-    //    public JwtTokenStore tokenStore() {
-    //        return new JwtTokenStore(jwtTokenEnhancer());
-    //    }
-//
-//    @Bean
-//    public DefaultTokenServices tokenService(){
-//        DefaultTokenServices defaultTokenServices = new DefaultTokenServices();
-//        defaultTokenServices.setTokenStore(tokenStore());
-//        defaultTokenServices.setTokenEnhancer(jwtAccessTokenConverter());
-//        defaultTokenServices.setReuseRefreshToken(true);
-//        return defaultTokenServices;
-//    }
-//
-//    @Bean
     private TokenStore tokenStore() {
         return new RedisTokenStore(connectionFactory);
-    }
-
-    /**
-     * This bean generates an token enhancer, which manages the exchange between JWT acces tokens and Authentication
-     * in both direction.
-     *
-     * @return an access token converter configured with JHipsters secret key
-     */
-    @Bean
-    public JwtAccessTokenConverter jwtAccessTokenConverter() {
-        JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
-        //        converter.setSigningKey(properties.getSecurity().getAuthentication().getJwt().getSecret());
-        KeyPair keyPair =
-                new KeyStoreKeyFactory(new ClassPathResource("server.jks"), "igitras".toCharArray()).getKeyPair(
-                        "igitras", "mdxayjy".toCharArray());
-        converter.setKeyPair(keyPair);
-        return converter;
     }
 
 }

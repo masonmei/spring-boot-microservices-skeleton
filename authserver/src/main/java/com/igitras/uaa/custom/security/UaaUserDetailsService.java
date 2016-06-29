@@ -10,7 +10,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
@@ -23,9 +23,10 @@ import java.util.Optional;
  *
  * @author mason
  */
-@Component
+@Service
 public class UaaUserDetailsService implements UserDetailsService {
     private static final Logger LOG = LoggerFactory.getLogger(UaaUserDetailsService.class);
+
     @Autowired
     private UserRepository userRepository;
 
