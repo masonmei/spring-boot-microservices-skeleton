@@ -1,0 +1,11 @@
+{
+  "title": "UAA Authentication Server",
+  "nav": {
+    "appName": "UAA Authentication Server",
+    "lang": {
+      "title": "Change the Language",
+      "zh_CN": "Chinese",
+      "en": "English"
+    }
+  }
+}

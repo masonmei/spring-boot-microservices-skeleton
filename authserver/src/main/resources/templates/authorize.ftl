@@ -53,4 +53,7 @@
         </form>
     </div>
 </div>
+
+<script href="js/wro.js"></script>
+
 </html>

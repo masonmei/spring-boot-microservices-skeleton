@@ -1,4 +1,4 @@
-(function() {
+(function () {
     'use strict';
 
     angular
@@ -7,28 +7,31 @@
 
     AuthServerProvider.$inject = ['$http', '$localStorage', '$sessionStorage', '$q'];
 
-    function AuthServerProvider ($http, $localStorage, $sessionStorage, $q) {
+    function AuthServerProvider($http, $localStorage, $sessionStorage, $q) {
         var service = {
             getToken: getToken,
             hasValidToken: hasValidToken,
             login: login,
             loginWithToken: loginWithToken,
+            getRefreshToken: getRefreshToken,
+            hasValidRefreshToken: hasValidRefreshToken,
+            loginWithRefreshToken: loginWithRefreshToken,
             storeAuthenticationToken: storeAuthenticationToken,
             logout: logout
         };
 
         return service;
 
-        function getToken () {
+        function getToken() {
             return $localStorage.authenticationToken || $sessionStorage.authenticationToken;
         }
 
-        function hasValidToken () {
+        function hasValidToken() {
             var token = this.getToken();
             return token && token.expires && token.expires > new Date().getTime();
         }
 
-        function login (credentials) {
+        function login(credentials) {
             var data = {
                 username: credentials.username,
                 password: credentials.password,
@@ -44,7 +47,7 @@
                 method: 'post',
                 data: data,
                 headers: headers,
-                transformRequest: function(obj) {
+                transformRequest: function (obj) {
                     var str = [];
                     for (var p in obj) {
                         str.push(encodeURIComponent(p) + '=' + encodeURIComponent(obj[p]));
@@ -56,16 +59,54 @@
                 var refreshToken = data.data["refresh_token"];
                 if (angular.isDefined(accessToken) && angular.isDefined(refreshToken)) {
                     service.storeAuthenticationToken(accessToken, refreshToken, credentials.rememberMe);
-                } else if (!angular.isDefined(refreshToken)){
+                } else if (!angular.isDefined(refreshToken)) {
                     service.storeAuthenticationToken(accessToken, '', credentials.rememberMe);
                 }
             });
         }
 
-        function loginWithRefreshToken() {
-            
+        function getRefreshToken() {
+            return $localStorage.authenticationRefreshToken || $sessionStorage.authenticationRefreshToken;
         }
-        
+
+        function hasValidRefreshToken() {
+            var refreshToken = getRefreshToken();
+            return refreshToken && refreshToken.expires && refreshToken.expires >= new Date().getTime();
+        }
+
+        function loginWithRefreshToken() {
+            var data = {
+                refresh_token: getRefreshToken(),
+                grant_type: "refresh_token"
+            };
+
+            var headers = {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            };
+
+            return $http({
+                url: 'uaa/oauth/token',
+                method: 'post',
+                data: data,
+                headers: headers,
+                transformRequest: function (obj) {
+                    var str = [];
+                    for (var p in obj) {
+                        str.push(encodeURIComponent(p) + '=' + encodeURIComponent(obj[p]));
+                    }
+                    return str.join('&');
+                }
+            }).then(function (data) {
+                var accessToken = data.data["access_token"];
+                var refreshToken = data.data["refresh_token"];
+                if (angular.isDefined(accessToken) && angular.isDefined(refreshToken)) {
+                    service.storeAuthenticationToken(accessToken, refreshToken, credentials.rememberMe);
+                } else if (!angular.isDefined(refreshToken)) {
+                    service.storeAuthenticationToken(accessToken, '', credentials.rememberMe);
+                }
+            });
+        }
+
         function loginWithToken(jwt, rememberMe) {
             var deferred = $q.defer();
 
@@ -80,7 +121,7 @@
         }
 
         function storeAuthenticationToken(jwt, refreshToken, rememberMe) {
-            if(rememberMe){
+            if (rememberMe) {
                 $localStorage.authenticationToken = jwt;
                 $localStorage.authenticationRefreshToken = refreshToken;
             } else {
@@ -89,7 +130,7 @@
             }
         }
 
-        function logout () {
+        function logout() {
             delete $localStorage.authenticationToken;
             delete $sessionStorage.authenticationToken;
 

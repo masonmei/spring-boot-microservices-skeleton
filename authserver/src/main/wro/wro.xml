@@ -3,5 +3,8 @@
         <css>webjar:bootstrap/3.2.0/less/bootstrap.less</css>
         <css>file:@project.basedir@/src/main/wro/main.less</css>
         <js>webjar:jquery/2.1.1/jquery.min.js</js>
+        <js>webjar:bootstrap/3.2.0/js/bootstrap.js</js>
+        <js>webjar:i18next/1.11.2/i18next.js</js>
+        <js>file:@project.basedir@/src/main/wro/app.js</js>
     </group>
 </groups>
