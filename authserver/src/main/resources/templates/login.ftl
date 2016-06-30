@@ -38,19 +38,22 @@
 
 <div class="wrapper">
     <form class="form-signin" role="form" action="login" method="post">
-        <h2 class="form-signin-heading">Please login</h2>
+        <h2 class="form-signin-heading" data-i18n="login.title">Please login</h2>
     <#if RequestParameters['error']??>
-        <div class="alert alert-danger">
+        <div class="alert alert-danger" data-i18n="login.error">
             There was a problem logging in. Please try again.
         </div>
     </#if>
-        <input type="text" class="form-control" name="username" placeholder="Username" required="" autofocus=""/>
-        <input type="password" class="form-control" name="password" placeholder="Password" required=""/>
+        <input type="text" class="form-control" name="username" data-i18n="[placeholder]login.username"
+               placeholder="Username" required="" autofocus=""/>
+        <input type="password" class="form-control" name="password" data-i18n="[placeholder]login.password"
+               placeholder="Password" required=""/>
         <label class="checkbox">
-            <input type="checkbox" id="rememberMe" name="remember-me"> Remember me
+            <input type="checkbox" id="rememberMe" name="remember-me"> <span data-i18n="login.rememberme">Remember
+            me<span>
         </label>
         <input type="hidden" id="csrf_token" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Login</button>
+        <button class="btn btn-lg btn-primary btn-block" type="submit" data-i18n="login.login">Login</button>
     </form>
 </div>
 <#--</div>-->

@@ -7,5 +7,26 @@
       "zh_CN": "Chinese",
       "en": "English"
     }
+  },
+  "login": {
+    "title": "Login",
+    "error": "There was a problem logging in. Please try again after checking your input.",
+    "username": "Username",
+    "password": "Password",
+    "rememberme": "Remember me",
+    "login": "Login"
+  },
+  "confirm": {
+    "title": "Please Confirm",
+    "tip": {
+      "client": "Client: ",
+      "url": "from website: ",
+      "resource": " need your authority to visit the following resources:"
+    },
+    "resources": {
+      "allow": "Allow ",
+      "approve": "Approve",
+      "deny": "Deny"
+    }
   }
 }

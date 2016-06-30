@@ -22,6 +22,7 @@ import org.springframework.security.oauth2.provider.token.store.KeyStoreKeyFacto
 import org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStore;
 
 import java.security.KeyPair;
+import javax.annotation.PostConstruct;
 import javax.sql.DataSource;
 
 /**
@@ -46,6 +47,13 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
     @Autowired
     private JwtAccessTokenConverter jwtAccessTokenConverter;
 
+    private TokenStore tokenStore;
+
+    @PostConstruct
+    public void init() {
+        tokenStore = new RedisTokenStore(connectionFactory);
+    }
+
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
         clients.jdbc(dataSource);
@@ -53,7 +61,7 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
 
     @Override
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
-        endpoints.authenticationManager(authenticationManager).tokenStore(tokenStore())
+        endpoints.authenticationManager(authenticationManager).tokenStore(tokenStore)
                 .accessTokenConverter(jwtAccessTokenConverter);
     }
 
@@ -65,8 +73,14 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
                 .checkTokenAccess("isAuthenticated()");
     }
 
-    private TokenStore tokenStore() {
-        return new RedisTokenStore(connectionFactory);
-    }
+//    private TokenStore tokenStore() {
+//        return new RedisTokenStore(connectionFactory);
+//    }
 
+    @Bean
+    public ApprovalStore approvalStore() {
+        TokenApprovalStore approvalStore = new TokenApprovalStore();
+        approvalStore.setTokenStore(tokenStore);
+        return approvalStore;
+    }
 }

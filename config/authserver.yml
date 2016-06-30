@@ -24,9 +24,3 @@ spring:
 project:
   mail:
     from: uaa@localhost
-  security:
-    authentication:
-      jwt:
-        secret: my-secret-token-to-change-in-production
-        # Token is valid 24 hours
-        tokenValidityInSeconds: 86400

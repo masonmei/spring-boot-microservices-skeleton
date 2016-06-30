@@ -7,5 +7,26 @@
       "zh_CN": "中文",
       "en": "英语"
     }
+  },
+  "login": {
+    "title": "请登录",
+    "error": "登录失败,请检查您的输入后重试!",
+    "username": "请输入用户名",
+    "password": "请输入密码",
+    "rememberme": "记住我",
+    "login": "登录"
+  },
+  "confirm": {
+    "title": "请授权",
+    "tip": {
+      "client": "客户端: ",
+      "url": "来自网站: ",
+      "resource": "需要访问您以下资源."
+    },
+    "resources": {
+      "allow": "允许 ",
+      "approve": "授权",
+      "deny": "取消"
+    }
   }
 }
