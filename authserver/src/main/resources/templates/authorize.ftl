@@ -51,7 +51,7 @@
             <#if scopes?exists>
                 <#list scopes?keys as scope>
                     <div class="form-group">
-                        <input class="checkbox-inline" type="checkbox" name="${scope}" value="true" disabled checked>
+                        <input class="checkbox-inline disabled" type="checkbox" name="${scope}" value="true" checked>
                         <span data-i18n="confirm.resources.allow">allow</span>${scope}.
                     </div>
                 </#list>
