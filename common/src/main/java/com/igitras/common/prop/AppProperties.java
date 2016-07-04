@@ -142,9 +142,14 @@ public class AppProperties {
     public static class Security {
 
         private final Authentication authentication = new Authentication();
+        private final Client client = new Client();
 
         public Authentication getAuthentication() {
             return authentication;
+        }
+
+        public Client getClient() {
+            return client;
         }
 
         public static class Authentication {
@@ -185,6 +190,39 @@ public class AppProperties {
                 public void setTokenValidityInSecondsForRememberMe(long tokenValidityInSecondsForRememberMe) {
                     this.tokenValidityInSecondsForRememberMe = tokenValidityInSecondsForRememberMe;
                 }
+            }
+        }
+
+        public static class Client {
+            private String authPath;
+            private String clientId;
+            private String clientSecret;
+
+            public String getAuthPath() {
+                return authPath;
+            }
+
+            public Client setAuthPath(String authPath) {
+                this.authPath = authPath;
+                return this;
+            }
+
+            public String getClientId() {
+                return clientId;
+            }
+
+            public String getClientSecret() {
+                return clientSecret;
+            }
+
+            public Client setClientId(String clientId) {
+                this.clientId = clientId;
+                return this;
+            }
+
+            public Client setClientSecret(String clientSecret) {
+                this.clientSecret = clientSecret;
+                return this;
             }
         }
     }

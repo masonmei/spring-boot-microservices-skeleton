@@ -4,28 +4,28 @@ logging:
        springframework:
          security: DEBUG
 
-security:
-  oauth2:
-    client:
-      access-token-uri: http://localhost:19999/uaa/oauth/token
-      user-authorization-uri: http://localhost:19999/uaa/oauth/authorize
-      client-id: client
-      client-secret: security
-      grant-type: password
-      authentication-scheme: query
-      client-authentication-scheme: form
-    resource:
-      jwt:
-        key-value: |
-          -----BEGIN PUBLIC KEY-----
-          MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAz1bpXSTC/tgb9aqQFYb7
-          Vf2Uxxqz7Cbpq3hM1FDa/zCentyqzv7HUzOvaGkBay+E7JPMIlIFSjaAcJe0M1Bi
-          3HNUiFjRp39lD0c9drbW8C6EjqLOnOJMVdqz0eoxaISGBhZcHcHYal1pXlQNJlky
-          rZZRgElDHnA/uXs5UkhiQyVoYSE0+T0MIKaF4DIcL67igWUzK9NwPHxSqizCkaiJ
-          WwXHxzVJGA9+k81vq1bl6FqysCobK/YrIqpg3vL7wT4SRn0pOVcABF0+PjvdPfUH
-          naAPU2gNkECwBJmsAhr02/lXmlmgeuQ/N2tCFvHZQHCTbKe/JK+tIMO73Qn8AgLZ
-          0QIDAQAB
-          -----END PUBLIC KEY-----
+#security:
+#  oauth2:
+#    client:
+#      access-token-uri: http://localhost:19999/uaa/oauth/token
+#      user-authorization-uri: http://localhost:19999/uaa/oauth/authorize
+#      client-id: client
+#      client-secret: security
+#      grant-type: password
+#      authentication-scheme: query
+#      client-authentication-scheme: form
+#    resource:
+#      jwt:
+#        key-value: |
+#          -----BEGIN PUBLIC KEY-----
+#          MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAz1bpXSTC/tgb9aqQFYb7
+#          Vf2Uxxqz7Cbpq3hM1FDa/zCentyqzv7HUzOvaGkBay+E7JPMIlIFSjaAcJe0M1Bi
+#          3HNUiFjRp39lD0c9drbW8C6EjqLOnOJMVdqz0eoxaISGBhZcHcHYal1pXlQNJlky
+#          rZZRgElDHnA/uXs5UkhiQyVoYSE0+T0MIKaF4DIcL67igWUzK9NwPHxSqizCkaiJ
+#          WwXHxzVJGA9+k81vq1bl6FqysCobK/YrIqpg3vL7wT4SRn0pOVcABF0+PjvdPfUH
+#          naAPU2gNkECwBJmsAhr02/lXmlmgeuQ/N2tCFvHZQHCTbKe/JK+tIMO73Qn8AgLZ
+#          0QIDAQAB
+#          -----END PUBLIC KEY-----
 
 github:
   client:
@@ -43,7 +43,13 @@ project:
 # Note that we don't proxy the calls to the authorization server. The reason being that
 # Spring cloud security would need to secure the api gateway before it can route the
 # requests using zuul
+  security:
+    client:
+      auth-path: /uaa/oauth/token
+      client-id: client
+      client-secret: security
 zuul:
+  sensitive-headers:
   routes:
 #    user-webservice: /user/**
 #    task-webservice: /task/**

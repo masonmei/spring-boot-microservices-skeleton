@@ -12,10 +12,7 @@
             getToken: getToken,
             hasValidToken: hasValidToken,
             login: login,
-            loginWithToken: loginWithToken,
-            getRefreshToken: getRefreshToken,
-            hasValidRefreshToken: hasValidRefreshToken,
-            loginWithRefreshToken: loginWithRefreshToken,
+            refreshAccessToken: refreshAccessToken,
             storeAuthenticationToken: storeAuthenticationToken,
             logout: logout
         };
@@ -38,8 +35,7 @@
                 grant_type: "password"
             };
             var headers = {
-                'Content-Type': 'application/x-www-form-urlencoded',
-                // "Authorization" : "Basic d2ViX2FwcDo="
+                'Content-Type': 'application/x-www-form-urlencoded'
             };
 
             return $http({
@@ -56,86 +52,53 @@
                 }
             }).then(function (data) {
                 var accessToken = data.data["access_token"];
-                var refreshToken = data.data["refresh_token"];
-                if (angular.isDefined(accessToken) && angular.isDefined(refreshToken)) {
-                    service.storeAuthenticationToken(accessToken, refreshToken, credentials.rememberMe);
-                } else if (!angular.isDefined(refreshToken)) {
-                    service.storeAuthenticationToken(accessToken, '', credentials.rememberMe);
+                if (angular.isDefined(accessToken)) {
+                    service.storeAuthenticationToken(data.data, credentials.rememberMe);
                 }
             });
         }
 
-        function getRefreshToken() {
-            return $localStorage.authenticationRefreshToken || $sessionStorage.authenticationRefreshToken;
-        }
-
-        function hasValidRefreshToken() {
-            var refreshToken = getRefreshToken();
-            return refreshToken && refreshToken.expires && refreshToken.expires >= new Date().getTime();
-        }
-
-        function loginWithRefreshToken() {
-            var data = {
-                refresh_token: getRefreshToken(),
-                grant_type: "refresh_token"
-            };
-
-            var headers = {
-                'Content-Type': 'application/x-www-form-urlencoded',
-            };
-
-            return $http({
-                url: 'uaa/oauth/token',
-                method: 'post',
-                data: data,
-                headers: headers,
-                transformRequest: function (obj) {
-                    var str = [];
-                    for (var p in obj) {
-                        str.push(encodeURIComponent(p) + '=' + encodeURIComponent(obj[p]));
-                    }
-                    return str.join('&');
-                }
-            }).then(function (data) {
-                var accessToken = data.data["access_token"];
-                var refreshToken = data.data["refresh_token"];
-                if (angular.isDefined(accessToken) && angular.isDefined(refreshToken)) {
-                    service.storeAuthenticationToken(accessToken, refreshToken, credentials.rememberMe);
-                } else if (!angular.isDefined(refreshToken)) {
-                    service.storeAuthenticationToken(accessToken, '', credentials.rememberMe);
-                }
-            });
-        }
-
-        function loginWithToken(jwt, rememberMe) {
-            var deferred = $q.defer();
-
-            if (angular.isDefined(jwt)) {
-                this.storeAuthenticationToken(jwt, rememberMe);
-                deferred.resolve(jwt);
-            } else {
-                deferred.reject();
+        function refreshAccessToken(refreshToken) {
+            if (refreshToken === undefined) {
+                return;
             }
 
-            return deferred.promise;
+            var data = {
+                grant_type: "refresh_token",
+                refresh_token: refreshToken
+            };
+            var headers = {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            };
+
+            return $http({
+                url: 'uaa/oauth/token',
+                method: 'post',
+                data: data,
+                headers: headers,
+                transformRequest: function (obj) {
+                    var str = [];
+                    for (var p in obj) {
+                        str.push(encodeURIComponent(p) + '=' + encodeURIComponent(obj[p]));
+                    }
+                    return str.join('&');
+                }
+            });
         }
 
-        function storeAuthenticationToken(jwt, refreshToken, rememberMe) {
+
+        function storeAuthenticationToken(jwt, rememberMe) {
             if (rememberMe) {
                 $localStorage.authenticationToken = jwt;
-                $localStorage.authenticationRefreshToken = refreshToken;
+
             } else {
                 $sessionStorage.authenticationToken = jwt;
-                $sessionStorage.authenticationRefreshToken = refreshToken;
             }
         }
 
         function logout() {
             delete $localStorage.authenticationToken;
             delete $sessionStorage.authenticationToken;
-
-            delete $localStorage.authenticationRefreshToken;
-            delete $sessionStorage.authenticationRefreshToken;
         }
     }
 })();

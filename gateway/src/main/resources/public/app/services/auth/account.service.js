@@ -9,7 +9,7 @@
 
     function Account ($resource) {
         var service = $resource('uaa/api/account', {}, {
-            'get': { method: 'GET', params: {}, isArray: false,
+            'get': { method: 'GET', params: {ignoreAuthModule: true}, isArray: false,
                 interceptor: {
                     response: function(response) {
                         // expose response

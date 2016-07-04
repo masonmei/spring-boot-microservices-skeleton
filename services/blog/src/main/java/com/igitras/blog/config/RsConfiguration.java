@@ -1,4 +1,4 @@
-package com.igitras.gateway.config;
+package com.igitras.blog.config;
 
 import static com.igitras.common.utils.Constants.Authority.ADMIN;
 import static com.igitras.common.utils.Constants.Authority.EDITOR;
@@ -22,9 +22,7 @@ import org.springframework.security.oauth2.provider.token.TokenStore;
 @EnableResourceServer
 public class RsConfiguration extends ResourceServerConfigurerAdapter {
 
-    private static final String RESOURCE_ID = "GATEWAY";
-    private static final String RESOURCE_READ = RESOURCE_ID + "_READ";
-    private static final String RESOURCE_WRITE = RESOURCE_ID + "_WRITE";
+    private static final String RESOURCE_ID = "BLOG";
 
     @Autowired
     private TokenStore tokenStore;
@@ -33,8 +31,7 @@ public class RsConfiguration extends ResourceServerConfigurerAdapter {
     public void configure(HttpSecurity http) throws Exception {
         // @formatter:off
         http.csrf().disable()
-                .requestMatchers().antMatchers("/api/**", "/management/**", "/v2/api-docs/**", "/configuration/ui")
-                .and().authorizeRequests()
+                .authorizeRequests().antMatchers("/**").authenticated()
                         .antMatchers("/v2/api-docs/**").permitAll()
                         .antMatchers("/configuration/ui").permitAll()
                         .antMatchers("/management/**").permitAll()
@@ -43,8 +40,7 @@ public class RsConfiguration extends ResourceServerConfigurerAdapter {
                         .antMatchers(HttpMethod.POST, "/api/**").hasAnyAuthority(EDITOR, ADMIN)
                         .antMatchers(HttpMethod.PUT, "/api/**").hasAnyAuthority(EDITOR, ADMIN)
                         .antMatchers(HttpMethod.DELETE, "/api/**").hasAnyAuthority(EDITOR, ADMIN)
-                        .antMatchers(HttpMethod.PATCH, "/api/**").hasAnyAuthority(EDITOR, ADMIN)
-                        .antMatchers("/**").permitAll();
+                        .antMatchers(HttpMethod.PATCH, "/api/**").hasAnyAuthority(EDITOR, ADMIN);
         // @formatter:on
     }
 

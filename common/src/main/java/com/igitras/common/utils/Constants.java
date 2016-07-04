@@ -23,6 +23,9 @@ public abstract class Constants {
     public abstract static class Authority {
         public static final String ADMIN = "ROLE_ADMIN";
         public static final String USER = "ROLE_USER";
+        public static final String EDITOR = "ROLE_EDITOR";
+        public static final String DEVELOPER = "ROLE_DEVELOPER";
+
         public static final String ANONYMOUS = "ROLE_ANONYMOUS";
     }
 
@@ -39,6 +42,11 @@ public abstract class Constants {
     public abstract static class Headers {
         public static final String AUTH_HEADER = "Authorization";
         public static final String BEARER = "Bearer";
+    }
+
+    public abstract static class Cookies {
+        public static final String REFRESH_TOKEN = "RefreshToken";
+        public static final int REFRESH_TOKEN_CACHES = 86400 * 30;
     }
 
     public abstract static class Params {

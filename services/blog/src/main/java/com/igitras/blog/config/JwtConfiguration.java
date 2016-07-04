@@ -1,4 +1,4 @@
-package com.igitras.gateway.config;
+package com.igitras.blog.config;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,7 +36,6 @@ public class JwtConfiguration {
         try {
             String publicKey = new String(FileCopyUtils.copyToByteArray(resource.getInputStream()));
             converter.setVerifierKey(publicKey);
-            LOG.debug("Configure the gateway jwt access token converter");
         } catch (IOException e) {
             LOG.warn("Reading jwt public key error.", e);
             throw new RuntimeException(e);

@@ -1,8 +1,11 @@
 package com.igitras.uaa.config;
 
+import static com.igitras.common.utils.Constants.Authority.ADMIN;
+import static com.igitras.common.utils.Constants.Authority.EDITOR;
+import static com.igitras.common.utils.Constants.Authority.USER;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
@@ -26,8 +29,6 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
     private static final Logger LOG = LoggerFactory.getLogger(ResourceServerConfig.class);
 
     private static final String RESOURCE_ID = "UAA";
-    private static final String RESOURCE_READ = RESOURCE_ID + "_READ";
-    private static final String RESOURCE_WRITE = RESOURCE_ID + "_WRITE";
 
     @Override
     public void configure(HttpSecurity http) throws Exception {
@@ -43,11 +44,11 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
                         .antMatchers("/configuration/ui").permitAll()
                         .antMatchers("/management/**").permitAll()
                         // .antMatchers("/management/**").hasAuthority(ADMIN)
-                        .antMatchers(HttpMethod.GET, "/api/**").hasAuthority(RESOURCE_READ)
-                        .antMatchers(HttpMethod.POST, "/api/**").hasAuthority(RESOURCE_WRITE)
-                        .antMatchers(HttpMethod.PUT, "/api/**").hasAuthority(RESOURCE_WRITE)
-                        .antMatchers(HttpMethod.DELETE, "/api/**").hasAuthority(RESOURCE_WRITE)
-                        .antMatchers(HttpMethod.PATCH, "/api/**").hasAuthority(RESOURCE_WRITE);
+                        .antMatchers(HttpMethod.GET, "/api/**").hasAuthority(USER)
+                        .antMatchers(HttpMethod.POST, "/api/**").hasAnyAuthority(EDITOR, ADMIN)
+                        .antMatchers(HttpMethod.PUT, "/api/**").hasAnyAuthority(EDITOR, ADMIN)
+                        .antMatchers(HttpMethod.DELETE, "/api/**").hasAnyAuthority(EDITOR, ADMIN)
+                        .antMatchers(HttpMethod.PATCH, "/api/**").hasAnyAuthority(EDITOR, ADMIN);
         // @formatter:on
     }
 

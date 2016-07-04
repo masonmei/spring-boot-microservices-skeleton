@@ -1,8 +1,9 @@
 package com.igitras.gateway.config;
 
+import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
+
 import com.igitras.gateway.custom.OAuthClientResources;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.security.oauth2.client.EnableOAuth2Sso;
 import org.springframework.boot.autoconfigure.security.oauth2.resource.UserInfoTokenServices;
 import org.springframework.boot.context.embedded.FilterRegistrationBean;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -29,7 +30,7 @@ import javax.servlet.Filter;
  * @author mason
  */
 @Configuration
-@EnableOAuth2Sso
+@EnableOAuth2Client
 @EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
@@ -73,7 +74,12 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.addFilterBefore(ssoFilter(), BasicAuthenticationFilter.class);
+        // @formatter:off
+        http.csrf().disable()
+                .headers().frameOptions().disable()
+                .and().sessionManagement().sessionCreationPolicy(STATELESS)
+                .and().addFilterBefore(ssoFilter(), BasicAuthenticationFilter.class);
+        // @formatter:on
     }
 
     private Filter ssoFilter() {
@@ -88,11 +94,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     private Filter ssoFilter(OAuthClientResources client, String path) {
         OAuth2ClientAuthenticationProcessingFilter oAuth2ClientAuthenticationFilter =
                 new OAuth2ClientAuthenticationProcessingFilter(path);
-        OAuth2RestTemplate oAuth2RestTemplate = new OAuth2RestTemplate(client.getClient(),
-                oauth2ClientContext);
+        OAuth2RestTemplate oAuth2RestTemplate = new OAuth2RestTemplate(client.getClient(), oauth2ClientContext);
         oAuth2ClientAuthenticationFilter.setRestTemplate(oAuth2RestTemplate);
-        UserInfoTokenServices tokenServices = new UserInfoTokenServices(
-                client.getResource().getUserInfoUri(), client.getClient().getClientId());
+        UserInfoTokenServices tokenServices = new UserInfoTokenServices(client.getResource()
+                .getUserInfoUri(), client.getClient()
+                .getClientId());
         tokenServices.setRestTemplate(oAuth2RestTemplate);
         oAuth2ClientAuthenticationFilter.setTokenServices(tokenServices);
         return oAuth2ClientAuthenticationFilter;
