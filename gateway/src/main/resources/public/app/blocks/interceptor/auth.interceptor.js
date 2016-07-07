@@ -17,17 +17,14 @@
         function request (config) {
             /*jshint camelcase: false */
             config.headers = config.headers || {};
-            var token = getAccessToken();
+            var token = $localStorage.authenticationToken || $sessionStorage.authenticationToken;
             
             if (token) {
-                config.headers.Authorization = 'Bearer ' + token['access_token'];
+                config.headers.Authorization = 'Bearer ' + token;
             }
             
             return config;
         }
 
-        function getAccessToken() {
-            return $localStorage.authenticationToken || $sessionStorage.authenticationToken;
-        }
     }
 })();

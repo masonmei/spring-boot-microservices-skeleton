@@ -17,7 +17,6 @@
             'infinite-scroll',
             // jhipster-needle-angularjs-add-module JHipster will add new module here
             'hc.marked',
-            'http-auth-interceptor',
             // add here
             'angular-loading-bar'
         ])

@@ -49,6 +49,9 @@ project:
       client-id: client
       client-secret: security
 zuul:
+  Servlet30WrapperFilter:
+    pre:
+      disable: true
   sensitive-headers:
   routes:
 #    user-webservice: /user/**

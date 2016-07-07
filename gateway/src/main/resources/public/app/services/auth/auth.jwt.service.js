@@ -53,19 +53,14 @@
             }).then(function (data) {
                 var accessToken = data.data["access_token"];
                 if (angular.isDefined(accessToken)) {
-                    service.storeAuthenticationToken(data.data, credentials.rememberMe);
+                    service.storeAuthenticationToken(accessToken, credentials.rememberMe);
                 }
             });
         }
 
-        function refreshAccessToken(refreshToken) {
-            if (refreshToken === undefined) {
-                return;
-            }
-
+        function refreshAccessToken() {
             var data = {
-                grant_type: "refresh_token",
-                refresh_token: refreshToken
+                grant_type: "refresh_token"
             };
             var headers = {
                 'Content-Type': 'application/x-www-form-urlencoded'
