@@ -49,6 +49,12 @@ public class RefreshTokenPostZuulFilter extends ZuulFilter {
                 cookie.setPath(ctx.getRequest().getContextPath() + properties.getSecurity().getClient().getAuthPath());
                 cookie.setMaxAge(REFRESH_TOKEN_CACHES); // 30 days
                 ctx.getResponse().addCookie(cookie);
+            } else {
+                LOG.debug("remove the cookie");
+                Cookie cookie = new Cookie(REFRESH_TOKEN, "");
+                cookie.setPath(ctx.getRequest().getContextPath() + properties.getSecurity().getClient().getAuthPath());
+                cookie.setMaxAge(0); // 30 days
+                ctx.getResponse().addCookie(cookie);
             }
             ctx.setResponseBody(responseBody);
         } catch (IOException e) {

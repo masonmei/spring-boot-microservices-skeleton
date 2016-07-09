@@ -49,13 +49,26 @@
      * and broadcasts 'event:auth-forbidden'.
      */
     angular.module('gatewayApp').factory('oauthInterceptor', oauthInterceptor);
-    oauthInterceptor.$inject = ['$rootScope', '$q', 'httpBuffer'];
-    function oauthInterceptor($rootScope, $q, httpBuffer) {
+    oauthInterceptor.$inject = ['$rootScope', '$q', 'httpBuffer',  '$localStorage', '$sessionStorage'];
+    function oauthInterceptor($rootScope, $q, httpBuffer,  $localStorage, $sessionStorage) {
         var service = {
+            request: request,
             responseError: responseError
         };
 
         return service;
+
+        function request (config) {
+            /*jshint camelcase: false */
+            config.headers = config.headers || {};
+            var token = $localStorage.authenticationToken || $sessionStorage.authenticationToken;
+
+            if (token) {
+                config.headers.Authorization = 'Bearer ' + token;
+            }
+
+            return config;
+        }
 
         function responseError(rejection) {
             var config = rejection.config || {};
