@@ -69,30 +69,7 @@
 
                         // now, send them to the signin state so they can log in
                         $state.go('accessdenied').then(function () {
-                            AuthServerProvider.refreshAccessToken().then(function (response) {
-                                console.log(response);
-                                var accessToken = response.data["access_token"];
-                                if (angular.isDefined(accessToken)) {
-                                    AuthServerProvider.storeAuthenticationToken(accessToken);
-
-                                    $rootScope.$broadcast('authenticationSuccess');
-
-                                    // previousState was set in the authExpiredInterceptor before being redirected to login modal.
-                                    // since login is succesful, go to stored previousState and clear previousState
-                                    if (getPreviousState()) {
-                                        var previousState = getPreviousState();
-                                        resetPreviousState();
-                                        $state.go(previousState.name, previousState.params);
-                                    }
-                                } else {
-                                    console.log("failed to refresh access token")
-                                    LoginService.open();
-                                }
-                            }).catch(function (response) {
-                                console.log(response);
-                                LoginService.open();
-                            });
-                            // LoginService.open();
+                            LoginService.open();
                         });
                     }
                 }

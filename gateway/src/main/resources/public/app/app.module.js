@@ -22,10 +22,11 @@
         ])
         .run(run);
 
-    run.$inject = ['stateHandler', 'translationHandler'];
+    run.$inject = ['stateHandler', 'translationHandler', 'oauthHandler'];
 
-    function run(stateHandler, translationHandler) {
+    function run(stateHandler, translationHandler, oauthHandler) {
         stateHandler.initialize();
         translationHandler.initialize();
+        oauthHandler.initialize();
     }
 })();

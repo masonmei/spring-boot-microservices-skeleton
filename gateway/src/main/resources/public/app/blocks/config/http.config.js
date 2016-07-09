@@ -15,8 +15,9 @@
         $urlRouterProvider.otherwise('/');
 
         $httpProvider.interceptors.push('errorHandlerInterceptor');
-        $httpProvider.interceptors.push('authExpiredInterceptor');
+        // $httpProvider.interceptors.push('authExpiredInterceptor');
         $httpProvider.interceptors.push('authInterceptor');
+        $httpProvider.interceptors.push('oauthInterceptor');
         $httpProvider.interceptors.push('notificationInterceptor');
         // jhipster-needle-angularjs-add-interceptor JHipster will add new application http interceptor here
 
