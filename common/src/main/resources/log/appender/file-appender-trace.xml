@@ -1,0 +1,18 @@
+<included>
+    <appender name="FILE-APPENDER-TRACE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>TRACE</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <encoder>
+            <pattern>${FILE_LOG_PATTERN}</pattern>
+            <charset>utf8</charset>
+        </encoder>
+        <file>log/${APP_NAME}.trace.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>log/${APP_NAME}.trace_%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>31</maxHistory>
+        </rollingPolicy>
+    </appender>
+</included>

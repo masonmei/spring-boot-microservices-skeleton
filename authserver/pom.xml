@@ -10,6 +10,10 @@
     <groupId>com.igitras.uaa</groupId>
     <artifactId>authserver</artifactId>
 
+    <properties>
+        <wro4j.version>1.7.9</wro4j.version>
+    </properties>
+
     <dependencies>
 
         <dependency>
@@ -38,16 +42,16 @@
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-redis</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-freemarker</artifactId>
         </dependency>
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-mail</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-redis</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -63,11 +67,11 @@
         </dependency>
         <dependency>
             <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-eureka</artifactId>
+            <artifactId>spring-cloud-config-client</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-config-client</artifactId>
+            <artifactId>spring-cloud-starter-eureka</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.cloud</groupId>
@@ -82,10 +86,6 @@
             <artifactId>spring-security-jwt</artifactId>
         </dependency>
     </dependencies>
-
-    <properties>
-        <wro4j.version>1.7.9</wro4j.version>
-    </properties>
     <build>
         <resources>
             <resource>
@@ -97,8 +97,8 @@
         </resources>
         <plugins>
             <!--<plugin>-->
-                <!--<groupId>com.spotify</groupId>-->
-                <!--<artifactId>docker-maven-plugin</artifactId>-->
+            <!--<groupId>com.spotify</groupId>-->
+            <!--<artifactId>docker-maven-plugin</artifactId>-->
             <!--</plugin>-->
             <plugin>
                 <artifactId>maven-resources-plugin</artifactId>
@@ -135,6 +135,23 @@
                         </goals>
                     </execution>
                 </executions>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.webjars</groupId>
+                        <artifactId>bootstrap</artifactId>
+                        <version>3.2.0</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>org.webjars</groupId>
+                        <artifactId>jquery</artifactId>
+                        <version>2.1.1</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>org.webjars.bower</groupId>
+                        <artifactId>i18next</artifactId>
+                        <version>1.11.2</version>
+                    </dependency>
+                </dependencies>
                 <configuration>
                     <wroManagerFactory>ro.isdc.wro.maven.plugin.manager.factory.ConfigurableWroManagerFactory</wroManagerFactory>
                     <cssDestinationFolder>${project.build.directory}/generated-resources/static/css</cssDestinationFolder>
@@ -143,23 +160,6 @@
                     <extraConfigFile>${basedir}/src/main/wro/wro.properties</extraConfigFile>
                     <contextFolder>${basedir}/src/main/wro</contextFolder>
                 </configuration>
-                <dependencies>
-                    <dependency>
-                        <groupId>org.webjars</groupId>
-                        <artifactId>jquery</artifactId>
-                        <version>2.1.1</version>
-                    </dependency>
-                    <dependency>
-                        <groupId>org.webjars</groupId>
-                        <artifactId>bootstrap</artifactId>
-                        <version>3.2.0</version>
-                    </dependency>
-                    <dependency>
-                        <groupId>org.webjars.bower</groupId>
-                        <artifactId>i18next</artifactId>
-                        <version>1.11.2</version>
-                    </dependency>
-                </dependencies>
             </plugin>
         </plugins>
 

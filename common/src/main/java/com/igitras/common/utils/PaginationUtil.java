@@ -11,7 +11,7 @@ import java.net.URISyntaxException;
  *
  * @author mason
  */
-public class PaginationUtil {
+public abstract class PaginationUtil {
     public static HttpHeaders generatePaginationHttpHeaders(Page<?> page, String baseUrl)
             throws URISyntaxException {
 

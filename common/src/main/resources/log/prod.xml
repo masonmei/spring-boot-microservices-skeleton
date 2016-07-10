@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+Base logback configuration provided for sia
+-->
+
+<included>
+    <property name="LOG_FILE_SIZE" value="500MB"/>
+
+    <include resource="log/base.xml"/>
+
+    <root level="INFO">
+        <appender-ref ref="CONSOLE"/>
+        <appender-ref ref="FILE-APPENDER-INFO"/>
+        <appender-ref ref="FILE-APPENDER-WARN"/>
+        <appender-ref ref="FILE-APPENDER-DEBUG"/>
+        <appender-ref ref="FILE-APPENDER-TRACE"/>
+        <appender-ref ref="FILE-APPENDER-ERROR"/>
+    </root>
+</included>

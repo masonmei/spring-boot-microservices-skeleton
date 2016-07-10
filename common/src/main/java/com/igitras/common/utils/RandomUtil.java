@@ -5,7 +5,7 @@ import org.apache.commons.lang3.RandomStringUtils;
 /**
  * @author mason
  */
-public class RandomUtil {
+public abstract class RandomUtil {
     private static final int DEF_COUNT = 20;
 
     private RandomUtil() {

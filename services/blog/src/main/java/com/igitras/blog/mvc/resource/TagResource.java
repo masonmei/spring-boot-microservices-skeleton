@@ -38,7 +38,7 @@ import java.util.Optional;
 @RequestMapping("/api/tags")
 public class TagResource {
 
-    private final Logger log = LoggerFactory.getLogger(TagResource.class);
+    private static final Logger LOG = LoggerFactory.getLogger(TagResource.class);
 
     @Autowired
     private TagRepository tagRepository;
@@ -54,7 +54,7 @@ public class TagResource {
             produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
     public ResponseEntity<TagDto> createTag(@RequestBody TagDto tagDto) throws URISyntaxException {
-        log.debug("REST request to save Tag : {}", tagDto);
+        LOG.debug("REST request to save Tag : {}", tagDto);
         if (tagDto.getId() != null) {
             return ResponseEntity.badRequest()
                     .headers(HeaderUtil.createFailureAlert("tag", "idexists", "A new tag cannot already have an ID"))
@@ -85,7 +85,7 @@ public class TagResource {
     @Timed
     public ResponseEntity<TagDto> updateTag(@PathVariable("id") Long id, @RequestBody TagDto tagDto)
             throws URISyntaxException {
-        log.debug("REST request to update Tag : {}", tagDto);
+        LOG.debug("REST request to update Tag : {}", tagDto);
         if (tagDto.getId() == null) {
             return createTag(tagDto);
         }
@@ -110,7 +110,7 @@ public class TagResource {
             produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
     public ResponseEntity<List<TagDto>> getAllTags(Pageable pageable) throws URISyntaxException {
-        log.debug("REST request to get a page of Tags");
+        LOG.debug("REST request to get a page of Tags");
         Page<Tag> page = tagRepository.findAll(pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/tags");
         List<TagDto> collect = new ArrayList<>();
@@ -134,7 +134,7 @@ public class TagResource {
             produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
     public ResponseEntity<TagDto> getTag(@PathVariable Long id) {
-        log.debug("REST request to get Tag : {}", id);
+        LOG.debug("REST request to get Tag : {}", id);
         Tag tag = tagRepository.findOne(id);
         return Optional.ofNullable(tag)
                 .map(result -> new ResponseEntity<>(new TagDto(result), HttpStatus.OK))
@@ -152,7 +152,7 @@ public class TagResource {
             produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
     public ResponseEntity<Void> deleteTag(@PathVariable Long id) {
-        log.debug("REST request to delete Tag : {}", id);
+        LOG.debug("REST request to delete Tag : {}", id);
         tagRepository.delete(id);
         return ResponseEntity.ok()
                 .headers(HeaderUtil.createEntityDeletionAlert("tag", id.toString()))

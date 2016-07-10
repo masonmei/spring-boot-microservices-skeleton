@@ -31,7 +31,7 @@ public class RsConfiguration extends ResourceServerConfigurerAdapter {
     public void configure(HttpSecurity http) throws Exception {
         // @formatter:off
         http.csrf().disable()
-                .authorizeRequests().antMatchers("/**").authenticated()
+                .authorizeRequests()
                         .antMatchers("/v2/api-docs/**").permitAll()
                         .antMatchers("/configuration/ui").permitAll()
                         .antMatchers("/management/**").permitAll()

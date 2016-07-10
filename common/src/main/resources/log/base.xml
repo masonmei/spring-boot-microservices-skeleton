@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+Base logback configuration provided for sia
+-->
+
+<included>
+    <property name="LOG_FILE"
+              value="${LOG_FILE:-${LOG_PATH:-${LOG_TEMP:-${java.io.tmpdir:-/tmp}}/}${APP_NAME:-spring}}}.log}"/>
+    <property name="ACCESS_DEBUG_FILTER" value="${ACCESS_DEBUG_FILTER:-/}"/>
+    <property name="LOG_PATTERN"
+              value="[%d{yyyy-MM-dd HH:mm:ss.SSS}] [%5p] [${PID:- }] [%t] --- [%-40.40logger{39}] : [%X{ip}][%X{requestId}][%X{traceTimestamp}][%X{traceSourceIp}][%X{currentUser}]: %m%n"/>
+    <property name="FILE_LOG_PATTERN" value="${FILE_LOG_PATTERN:-${LOG_PATTERN}}}"/>
+
+    <!--<include resource="org/springframework/boot/logging/logback/defaults.xml" />-->
+    <include resource="log/appender/file-appender-info.xml"/>
+    <include resource="log/appender/file-appender-error.xml"/>
+    <include resource="log/appender/file-appender-warn.xml"/>
+    <include resource="log/appender/file-appender-debug.xml"/>
+    <include resource="log/appender/file-appender-trace.xml"/>
+    <include resource="log/appender/sift-file-appender.xml"/>
+
+    <include resource="log/appender/console-appender.xml"/>
+</included>

@@ -1,0 +1,45 @@
+<included>
+    <statusListener class="ch.qos.logback.core.status.OnConsoleStatusListener"/>
+
+    <property name="ACCESS_URI_PREFIX" value="${ACCESS_DEBUG_FILTER:-/}"/>
+    <property name="INTERNAL_ACCESS_PATTERN"
+              value="[%h] [%l] [%u] [%t] [%r] [%s] [%b] [%i{Referer}] [%i{User-Agent}] %n======&gt;%n%fullRequest%n&lt;======%n%fullResponse%n"/>
+
+    <appender name="CONSOLE-APPENDER-ACCESS-DEBUG" class="ch.qos.logback.core.ConsoleAppender">
+        <filter class="ch.qos.logback.core.filter.EvaluatorFilter">
+            <evaluator name="Prefix">
+                <expression>
+                    event.getRequestURI().startsWith("${ACCESS_URI_PREFIX}")
+                </expression>
+            </evaluator>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <encoder>
+            <pattern>${FILE_LOG_ACCESS_PATTERN:-${INTERNAL_ACCESS_PATTERN}}</pattern>
+            <charset>utf8</charset>
+        </encoder>
+    </appender>
+
+    <appender name="FILE-APPENDER-ACCESS-DEBUG" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <filter class="ch.qos.logback.core.filter.EvaluatorFilter">
+            <evaluator name="Prefix">
+                <expression>
+                    event.getRequestURI().startsWith("${ACCESS_URI_PREFIX}")
+                </expression>
+            </evaluator>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <encoder>
+            <pattern>${FILE_LOG_ACCESS_PATTERN:-${INTERNAL_ACCESS_PATTERN}}</pattern>
+            <charset>utf8</charset>
+        </encoder>
+        <file>log/access/${APP_NAME}.access.debug.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>log/access/${APP_NAME}.access.debug_%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>${LOG_FILE_SIZE:-50MB}</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+            <maxHistory>31</maxHistory>
+        </rollingPolicy>
+    </appender>
+</included>

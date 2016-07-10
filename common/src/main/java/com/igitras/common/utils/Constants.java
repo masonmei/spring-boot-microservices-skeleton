@@ -9,7 +9,8 @@ public abstract class Constants {
         public static final String BASE = "project";
         public static final String ENABLED = "enabled";
 
-        public static final String SWAGGER_ENABLED = BASE + ".swagger" + ENABLED;
+        public static final String SWAGGER_ENABLED = BASE + ".swagger." + ENABLED;
+        public static final String ACCESS_LOG_ENABLED = BASE + ".accesslog." + ENABLED;
     }
 
     public abstract static class Profile {

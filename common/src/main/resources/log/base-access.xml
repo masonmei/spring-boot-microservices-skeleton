@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+Base logback configuration provided for sia
+-->
+
+<included>
+    <property name="LOG_FILE"
+              value="${LOG_FILE:-${LOG_PATH:-${LOG_TEMP:-${java.io.tmpdir:-/tmp}}/}${APP_NAME:-spring}}}.log}"/>
+    <property name="ACCESS_DEBUG_FILTER" value="${ACCESS_DEBUG_FILTER:-/}"/>
+
+    <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
+    <include resource="log/appender/file-appender-access.xml"/>
+    <include resource="log/appender/file-appender-access-debug.xml"/>
+</included>

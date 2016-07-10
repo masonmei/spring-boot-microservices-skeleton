@@ -1,0 +1,24 @@
+<included>
+    <appender name="SIFT-APPENDER"
+              class="ch.qos.logback.classic.sift.SiftingAppender">
+        <discriminator>
+            <key>category</key>
+            <defaultValue>unknown</defaultValue>
+        </discriminator>
+        <sift>
+            <appender name="FILE-${category}" class="ch.qos.logback.core.rolling.RollingFileAppender">
+                <encoder>
+                    <pattern>${FILE_LOG_PATTERN}</pattern>
+                </encoder>
+                <file>log/${category}/${APP_NAME}_${category}.log</file>
+                <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+                    <fileNamePattern>log/${category}/${APP_NAME}_${category}_%i.log</fileNamePattern>
+                </rollingPolicy>
+                <triggeringPolicy
+                        class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+                    <MaxFileSize>10MB</MaxFileSize>
+                </triggeringPolicy>
+            </appender>
+        </sift>
+    </appender>
+</included>

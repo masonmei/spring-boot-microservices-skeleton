@@ -26,6 +26,10 @@ public class AppProperties {
 
     private final Ribbon ribbon = new Ribbon();
 
+    private final AccessLog accessLog = new AccessLog();
+
+    private final Logging logging = new Logging();
+
     public Async getAsync() {
         return async;
     }
@@ -57,6 +61,12 @@ public class AppProperties {
     public Ribbon getRibbon() {
         return ribbon;
     }
+
+    public AccessLog getAccessLog() {
+        return accessLog;
+    }
+
+    public Logging getLogging() { return logging; }
 
     public static class Async {
 
@@ -470,10 +480,6 @@ public class AppProperties {
         }
     }
 
-    private final Logging logging = new Logging();
-
-    public Logging getLogging() { return logging; }
-
     public static class Logging {
 
         private final Logstash logstash = new Logstash();
@@ -519,6 +525,29 @@ public class AppProperties {
 
         public void setDisplayOnActiveProfiles(String[] displayOnActiveProfiles) {
             this.displayOnActiveProfiles = displayOnActiveProfiles;
+        }
+    }
+
+    public static class AccessLog {
+        private boolean enabled = true;
+        private String configFile = "logback-access.xml";
+
+        public boolean isEnabled() {
+            return enabled;
+        }
+
+        public AccessLog setEnabled(boolean enabled) {
+            this.enabled = enabled;
+            return this;
+        }
+
+        public String getConfigFile() {
+            return configFile;
+        }
+
+        public AccessLog setConfigFile(String configFile) {
+            this.configFile = configFile;
+            return this;
         }
     }
 }

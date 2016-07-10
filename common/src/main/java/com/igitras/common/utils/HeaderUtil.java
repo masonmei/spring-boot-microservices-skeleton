@@ -7,7 +7,7 @@ import org.springframework.http.HttpHeaders;
 /**
  * @author mason
  */
-public class HeaderUtil {
+public abstract class HeaderUtil {
     private static final Logger LOG = LoggerFactory.getLogger(HeaderUtil.class);
 
     public static HttpHeaders createAlert(String message, String param) {

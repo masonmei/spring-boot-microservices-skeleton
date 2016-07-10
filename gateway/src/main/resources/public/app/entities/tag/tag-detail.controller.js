@@ -5,9 +5,9 @@
         .module('gatewayApp')
         .controller('TagDetailController', TagDetailController);
 
-    TagDetailController.$inject = ['$scope', '$rootScope', '$stateParams', 'entity', 'Tag', 'Blog'];
+    TagDetailController.$inject = ['$scope', '$rootScope', '$stateParams', 'entity', 'Tag', 'Post'];
 
-    function TagDetailController($scope, $rootScope, $stateParams, entity, Tag, Blog) {
+    function TagDetailController($scope, $rootScope, $stateParams, entity, Tag, Post) {
         var vm = this;
 
         vm.tag = entity;

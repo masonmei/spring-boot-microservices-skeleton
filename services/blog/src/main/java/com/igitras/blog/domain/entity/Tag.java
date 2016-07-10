@@ -27,7 +27,7 @@ public class Tag extends AbstractPersistable<Long> {
 
     @ManyToMany(mappedBy = "tags")
     @JsonIgnore
-    private Set<Blog> blogs = new HashSet<>();
+    private Set<Post> posts = new HashSet<>();
 
     public Tag() {
     }
@@ -54,12 +54,12 @@ public class Tag extends AbstractPersistable<Long> {
         return this;
     }
 
-    public Set<Blog> getBlogs() {
-        return blogs;
+    public Set<Post> getPosts() {
+        return posts;
     }
 
-    public Tag setBlogs(Set<Blog> blogs) {
-        this.blogs = blogs;
+    public Tag setPosts(Set<Post> posts) {
+        this.posts = posts;
         return this;
     }
 
@@ -73,7 +73,7 @@ public class Tag extends AbstractPersistable<Long> {
         return MoreObjects.toStringHelper(this)
                 .add("name", name)
                 .add("description", description)
-                .add("blogs", blogs)
+                .add("posts", posts)
                 .toString();
     }
 }

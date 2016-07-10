@@ -7,3 +7,6 @@ spring:
 server:
   port: 18082
   context-path: /blog
+
+management:
+  context-path: /management

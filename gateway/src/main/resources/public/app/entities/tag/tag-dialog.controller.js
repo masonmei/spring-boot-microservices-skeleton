@@ -5,15 +5,15 @@
         .module('gatewayApp')
         .controller('TagDialogController', TagDialogController);
 
-    TagDialogController.$inject = ['$timeout', '$scope', '$stateParams', '$uibModalInstance', 'entity', 'Tag', 'Blog'];
+    TagDialogController.$inject = ['$timeout', '$scope', '$stateParams', '$uibModalInstance', 'entity', 'Tag', 'Post'];
 
-    function TagDialogController($timeout, $scope, $stateParams, $uibModalInstance, entity, Tag, Blog) {
+    function TagDialogController($timeout, $scope, $stateParams, $uibModalInstance, entity, Tag, Post) {
         var vm = this;
 
         vm.tag = entity;
         vm.clear = clear;
         vm.save = save;
-        vm.blogs = Blog.query();
+        vm.posts = Post.query();
 
         $timeout(function () {
             angular.element('.form-group:eq(1)>input').focus();

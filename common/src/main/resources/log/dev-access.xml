@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+Base logback configuration provided for sia
+-->
+
+<included>
+    <property name="ACCESS_DEBUG_FILTER" value="${ACCESS_DEBUG_FILTER:-/}"/>
+
+    <include resource="log/base-access.xml"/>
+
+    <appender-ref ref="FILE-APPENDER-ACCESS"/>
+    <appender-ref ref="CONSOLE-APPENDER-ACCESS"/>
+    <appender-ref ref="FILE-APPENDER-ACCESS-DEBUG"/>
+    <appender-ref ref="CONSOLE-APPENDER-ACCESS-DEBUG"/>
+</included>
