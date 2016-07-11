@@ -34,18 +34,13 @@
         <maven-enforcer-plugin.version>1.4.1</maven-enforcer-plugin.version>
         <maven-processor-plugin.version>3.1.0</maven-processor-plugin.version>
         <maven.build.timestamp.format>yyyyMMddHHmmss</maven.build.timestamp.format>
-
         <node.version>v6.1.0</node.version>
         <npm.version>3.8.6</npm.version>
-
         <!-- plugins version-->
         <sortpom-maven-plugin.version>2.5.0</sortpom-maven-plugin.version>
         <spring-cloud.version>Brixton.RELEASE</spring-cloud.version>
-        <spring-platform.version>2.0.4.RELEASE</spring-platform.version>
         <spring-security.version>4.1.0.RELEASE</spring-security.version>
-
         <springfox.version>2.5.0</springfox.version>
-
         <timestamp>${maven.build.timestamp}</timestamp>
     </properties>
     <dependencyManagement>
@@ -56,11 +51,6 @@
                 <version>${springfox.version}</version>
             </dependency>
 
-            <dependency>
-                <groupId>org.mapstruct</groupId>
-                <artifactId>mapstruct-jdk8</artifactId>
-                <version>${mapstruct.version}</version>
-            </dependency>
             <dependency>
                 <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-commons</artifactId>
@@ -181,37 +171,6 @@
                                 <include>${project.build.finalName}.jar</include>
                             </resource>
                         </resources>
-                    </configuration>
-                </plugin>
-                <plugin>
-                    <groupId>org.bsc.maven</groupId>
-                    <artifactId>maven-processor-plugin</artifactId>
-                    <version>2.2.4</version>
-                    <executions>
-                        <execution>
-                            <id>process</id>
-                            <phase>generate-sources</phase>
-                            <goals>
-                                <goal>process</goal>
-                            </goals>
-                        </execution>
-                    </executions>
-                    <dependencies>
-                        <dependency>
-                            <groupId>org.mapstruct</groupId>
-                            <artifactId>mapstruct-processor</artifactId>
-                            <version>${mapstruct.version}</version>
-                        </dependency>
-                    </dependencies>
-                    <configuration>
-                        <defaultOutputDirectory>${project.build.directory}/generated-sources</defaultOutputDirectory>
-                        <processors>
-                            <processor>org.mapstruct.ap.MappingProcessor</processor>
-                        </processors>
-                        <options>
-                            <mapstruct.suppressGeneratorTimestamp>true</mapstruct.suppressGeneratorTimestamp>
-                            <mapstruct.defaultComponentModel>spring</mapstruct.defaultComponentModel>
-                        </options>
                     </configuration>
                 </plugin>
                 <!--
