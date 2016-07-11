@@ -56,8 +56,8 @@ public class Post extends AuditingEntity<Long> {
     private String content;
 
     @ManyToMany(fetch = EAGER)
-    @JoinTable(name = "blog_tags",
-            joinColumns = @JoinColumn(name = "blog_id", referencedColumnName = "id"),
+    @JoinTable(name = "post_tags",
+            joinColumns = @JoinColumn(name = "post_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "tag_id", referencedColumnName = "id"))
     private Set<Tag> tags = new HashSet<>();
 

@@ -11,7 +11,7 @@
  Target Server Version : 50625
  File Encoding         : utf-8
 
- Date: 06/11/2016 14:42:18 PM
+ Date: 07/11/2016 20:34:02 PM
 */
 
 SET NAMES utf8;
@@ -42,7 +42,7 @@ CREATE TABLE `authority` (
 --  Records of `authority`
 -- ----------------------------
 BEGIN;
-INSERT INTO `authority` VALUES ('ROLE_ADMIN'), ('ROLE_USER'), ('ROLE_DEVELOPER');
+INSERT INTO `authority` VALUES ('ROLE_ADMIN'), ('ROLE_DEVELOPER'), ('ROLE_EDITOR'), ('ROLE_USER');
 COMMIT;
 
 -- ----------------------------
@@ -82,7 +82,7 @@ CREATE TABLE `oauth_client_details` (
 --  Records of `oauth_client_details`
 -- ----------------------------
 BEGIN;
-INSERT INTO `oauth_client_details` VALUES ('client', null, '$2a$10$gqVHvGp0N/SLZRyfUkM.eemmXvQDO252Y2rNJKM/XIDEwIUsS7pOq', 'read,write', 'authorization_code,password,client_credentials', null, 'ROLE_CLIENT', '300', null, '{\"anyProperty\":\"anyValue\"}', null);
+INSERT INTO `oauth_client_details` VALUES ('client', 'UAA,COMMENT,BLOG,GATEWAY', '$2a$10$gqVHvGp0N/SLZRyfUkM.eemmXvQDO252Y2rNJKM/XIDEwIUsS7pOq', 'UAA_READ,UAA_WRITE,COMMENT_READ,COMMENT_WRITE,BLOG_READ,BLOG_WRITE,GATEWAY_READ,GATEWAY_WRITE', 'authorization_code,password,client_credentials,refresh_token', null, 'ROLE_CLIENT, UAA_READ', '60', '2592000', '{\"anyProperty\":\"anyValue\"}', '');
 COMMIT;
 
 -- ----------------------------
@@ -123,11 +123,13 @@ CREATE TABLE `oauth_refresh_token` (
 DROP TABLE IF EXISTS `persistent_audit_event`;
 CREATE TABLE `persistent_audit_event` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `event_date` tinyblob,
+  `event_date` datetime DEFAULT NULL,
   `event_type` varchar(255) COLLATE utf8_bin DEFAULT NULL,
   `principal` varchar(255) COLLATE utf8_bin NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `principal_idx` (`principal`)
+  KEY `principal_idx` (`principal`),
+  KEY `principal_audit_date_idx` (`principal`,`event_date`),
+  KEY `audit_date_idx` (`event_date`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- ----------------------------
@@ -137,9 +139,9 @@ DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `created_by` varchar(50) COLLATE utf8_bin NOT NULL,
-  `created_date` tinyblob NOT NULL,
+  `created_date` datetime NOT NULL,
   `last_modified_by` varchar(50) COLLATE utf8_bin DEFAULT NULL,
-  `last_modified_date` tinyblob,
+  `last_modified_date` datetime DEFAULT NULL,
   `activated` bit(1) NOT NULL,
   `activation_key` varchar(20) COLLATE utf8_bin DEFAULT NULL,
   `email` varchar(100) COLLATE utf8_bin DEFAULT NULL,
@@ -148,7 +150,7 @@ CREATE TABLE `user` (
   `last_name` varchar(50) COLLATE utf8_bin DEFAULT NULL,
   `login` varchar(50) COLLATE utf8_bin NOT NULL,
   `password_hash` varchar(60) COLLATE utf8_bin NOT NULL,
-  `reset_date` tinyblob,
+  `reset_date` datetime DEFAULT NULL,
   `reset_key` varchar(20) COLLATE utf8_bin DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `UK_ew1hvam8uwaknuaellwhqchhb` (`login`),
@@ -159,7 +161,7 @@ CREATE TABLE `user` (
 --  Records of `user`
 -- ----------------------------
 BEGIN;
-INSERT INTO `user` VALUES ('1', 'mason', 0xaced00057372000d6a6176612e74696d652e536572955d84ba1b2248b20c00007870771f06000007e0060a0c33332b45e1802007000d417369612f5368616e6768616978, 'mason', 0xaced00057372000d6a6176612e74696d652e536572955d84ba1b2248b20c00007870771f06000007e0060a0c33332b45e1802007000d417369612f5368616e6768616978, b'1', '58810252782992301219', 'mason@igitras.com', 'dongxu', 'en', 'mei', 'mason', '$2a$10$FTLXXEJzLuQoybxJaqDXPOHnkLZC4xCHh7v5tiDuSvTHP.al94cIq', null, null);
+INSERT INTO `user` VALUES ('1', 'mason', '2016-06-06 00:00:00', 'mason', '2016-06-06 00:00:00', b'1', '58810252782992301219', 'mason@igitras.com', '东旭', 'zh-cn', '梅', 'mason', '$2a$10$FTLXXEJzLuQoybxJaqDXPOHnkLZC4xCHh7v5tiDuSvTHP.al94cIq', null, null);
 COMMIT;
 
 -- ----------------------------
@@ -174,12 +176,5 @@ CREATE TABLE `user_authority` (
   CONSTRAINT `FK_5losscgu02yaej7prap7o6g5s` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`),
   CONSTRAINT `FK_tnnyxjpcvg2aj0d0i6ufnabm2` FOREIGN KEY (`authority_name`) REFERENCES `authority` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-
--- ----------------------------
---  Records of `user_authority`
--- ----------------------------
-BEGIN;
-INSERT INTO `user_authority` VALUES ('1', 'ROLE_USER');
-COMMIT;
 
 SET FOREIGN_KEY_CHECKS = 1;
