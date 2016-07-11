@@ -1,0 +1,68 @@
+<div>
+    <h2 translate="comment.home.title">Comments</h2>
+    <jhi-alert></jhi-alert>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-4 no-padding-left">
+                <button class="btn btn-primary" ui-sref="comment.new" >
+                    <span class="glyphicon glyphicon-plus"></span>
+                    <span  translate="comment.home.createLabel">
+                        Create new Comment
+                    </span>
+                </button>
+            </div>
+        </div>
+    </div>
+    <br/>
+    <div class="table-responsive">
+        <table class="jh-table table table-striped">
+            <thead>
+                <tr>
+                    <th><span translate="global.field.id">ID</span></th>
+                    <th><span translate="comment.createDate">Create Date</span></th>
+                    <th><span translate="comment.postId">Post Id</span></th>
+                    <th><span translate="comment.author">Author</span></th>
+                    <th><span translate="comment.authorEmail">Author Email</span></th>
+                    <th><span translate="comment.authorUrl">Author Url</span></th>
+                    <th><span translate="comment.authorIp">Author Ip</span></th>
+                    <th><span translate="comment.content">Content</span></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="comment in vm.comments track by comment.id">
+                    <td><a ui-sref="comment-detail({id:comment.id})">{{comment.id}}</a></td>
+                    <td>{{comment.createDate | date:'medium'}}</td>
+                    <td>{{comment.postId}}</td>
+                    <td>{{comment.author}}</td>
+                    <td>{{comment.authorEmail}}</td>
+                    <td>{{comment.authorUrl}}</td>
+                    <td>{{comment.authorIp}}</td>
+                    <td>{{comment.content}}</td>
+                    <td class="text-right">
+                        <div class="btn-group flex-btn-group-container">
+                            <button type="submit"
+                                    ui-sref="comment-detail({id:comment.id})"
+                                    class="btn btn-info btn-sm">
+                                <span class="glyphicon glyphicon-eye-open"></span>
+                                <span class="hidden-xs hidden-sm" translate="entity.action.view"></span>
+                            </button>
+                            <button type="submit"
+                                    ui-sref="comment.edit({id:comment.id})"
+                                    class="btn btn-primary btn-sm">
+                                <span class="glyphicon glyphicon-pencil"></span>
+                                <span class="hidden-xs hidden-sm" translate="entity.action.edit"></span>
+                            </button>
+                            <button type="submit"
+                                    ui-sref="comment.delete({id:comment.id})"
+                                    class="btn btn-danger btn-sm">
+                                <span class="glyphicon glyphicon-remove-circle"></span>
+                                <span class="hidden-xs hidden-sm" translate="entity.action.delete"></span>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

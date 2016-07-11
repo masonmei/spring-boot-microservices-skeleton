@@ -9,6 +9,7 @@
                 "main": "Entities",
                 "post": "Blog",
                 "tag": "Tag",
+                "comment": "Comment",
                 "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
             },
             "account": {

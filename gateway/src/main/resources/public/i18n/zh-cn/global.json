@@ -9,6 +9,7 @@
                 "main": "数据",
                 "post": "博文",
                 "tag": "标签",
+                "comment": "评论",
                 "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
             },
             "account": {
