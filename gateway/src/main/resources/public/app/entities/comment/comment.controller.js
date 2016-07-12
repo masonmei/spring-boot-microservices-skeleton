@@ -5,17 +5,18 @@
         .module('gatewayApp')
         .controller('CommentController', CommentController);
 
-    CommentController.$inject = ['$scope', '$state', 'Comment'];
+    CommentController.$inject = ['$scope', '$state', '$stateParams', 'Comment'];
 
-    function CommentController ($scope, $state, Comment) {
+    function CommentController ($scope, $state, $stateParams, Comment) {
         var vm = this;
         
         vm.comments = [];
+        vm.postId = $stateParams.postId;
 
         loadAll();
 
         function loadAll() {
-            Comment.query(function(result) {
+            Comment.query({postId: vm.postId}, function(result) {
                 vm.comments = result;
             });
         }

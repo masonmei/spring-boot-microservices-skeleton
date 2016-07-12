@@ -5,5 +5,5 @@
   ${AnsiColor.GREEN}   ██    ${AnsiColor.RED} ██     ██     ██        ██     ██   ██   ██    ██       ██
   ${AnsiColor.GREEN}████████ ${AnsiColor.RED}  ███████   ████████     ██     ██    ██  ██    ██  ██████
 
-${AnsiColor.BRIGHT_BLUE}:: Micro service Registry :: Running Spring Boot ${spring-boot.version} ::
+${AnsiColor.BRIGHT_BLUE}:: Micro service Config Server :: Running Spring Boot ${spring-boot.version} ::
 :: http://ms.igitras.com ::${AnsiColor.DEFAULT}

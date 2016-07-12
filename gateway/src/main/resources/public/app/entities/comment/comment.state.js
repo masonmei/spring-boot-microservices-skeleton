@@ -11,7 +11,7 @@
         $stateProvider
         .state('comment', {
             parent: 'entity',
-            url: '/comment',
+            url: '/post/{postId}/comment',
             data: {
                 authorities: ['ROLE_USER'],
                 pageTitle: 'comment.home.title'

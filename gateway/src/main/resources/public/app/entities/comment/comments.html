@@ -30,7 +30,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="comment in vm.comments track by comment.id">
+                <tr ng-repeat="comment in vm.comments.content track by comment.id">
                     <td><a ui-sref="comment-detail({id:comment.id})">{{comment.id}}</a></td>
                     <td>{{comment.createDate | date:'medium'}}</td>
                     <td>{{comment.postId}}</td>

@@ -7,10 +7,10 @@
     Comment.$inject = ['$resource', 'DateUtils'];
 
     function Comment ($resource, DateUtils) {
-        var resourceUrl =  'blog/api/comments/:id';
+        var resourceUrl =  'blog/api/posts/:postId/comments/:id';
 
         return $resource(resourceUrl, {}, {
-            'query': { method: 'GET', isArray: true},
+            'query': { method: 'GET'},
             'get': {
                 method: 'GET',
                 transformResponse: function (data) {
