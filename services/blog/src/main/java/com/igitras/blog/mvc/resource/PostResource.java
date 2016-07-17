@@ -31,6 +31,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.security.Principal;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import javax.validation.Valid;
@@ -150,6 +151,27 @@ public class PostResource {
      *
      * @throws URISyntaxException
      */
+    @RequestMapping(value = "mine", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @Timed
+    public ResponseEntity<Page<PostDto>> geAllMyPosts(Principal principal, Pageable pageable)
+            throws URISyntaxException {
+        log.debug("REST request to get a page of all my Posts");
+        Page<Post> page = postRepository.findAllByAuthor(principal.getName(), pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/posts/mine");
+
+        Page<PostDto> collect = page.map(PostDto::new);
+        return new ResponseEntity<>(collect, headers, HttpStatus.OK);
+    }
+
+    /**
+     * Get the most recently posted posts.
+     *
+     * @param pageable pageable.
+     *
+     * @return most recently posted posts.
+     *
+     * @throws URISyntaxException
+     */
     @RequestMapping(value = "latest", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
     public ResponseEntity<Page<PostDto>> geLatestPosts(Pageable pageable) throws URISyntaxException {
@@ -170,7 +192,7 @@ public class PostResource {
      *
      * @throws URISyntaxException
      */
-    @RequestMapping(value = "populated", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "popular", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
     public ResponseEntity<Page<PostDto>> getPopulatesPosts(Pageable pageable) throws URISyntaxException {
         log.debug("REST request to get a page of populates Posts");

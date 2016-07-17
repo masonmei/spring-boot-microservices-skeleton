@@ -38,7 +38,7 @@ public class PostDto implements Serializable {
     private Set<TagDto> tags = new HashSet<>();
     private ZonedDateTime createTime;
     private ZonedDateTime updateTime;
-
+    private long commentCount = 0;
     private Page<CommentDto> comments;
 
     public PostDto() {
@@ -160,6 +160,16 @@ public class PostDto implements Serializable {
 
     public PostDto setComments(Page<CommentDto> comments) {
         this.comments = comments;
+        setCommentCount(comments.getTotalElements());
+        return this;
+    }
+
+    public long getCommentCount() {
+        return commentCount;
+    }
+
+    public PostDto setCommentCount(long commentCount) {
+        this.commentCount = commentCount;
         return this;
     }
 }

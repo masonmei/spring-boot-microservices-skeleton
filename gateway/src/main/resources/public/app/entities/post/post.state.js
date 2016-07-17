@@ -55,7 +55,7 @@
             parent: 'entity',
             url: '/post/{id}',
             data: {
-                authorities: ['ROLE_USER'],
+                authorities: [],
                 pageTitle: 'post.detail.title'
             },
             views: {

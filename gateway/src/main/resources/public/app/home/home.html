@@ -1,41 +1,56 @@
 <div ng-cloak>
     <div class="row">
-        <div class="col-md-4">
-            <span class="hipster img-responsive img-rounded"></span>
-        </div>
         <div class="col-md-8">
-            <h1 translate="home.title">Welcome, Java Hipster!</h1>
-            <p class="lead" translate="home.subtitle">This is your homepage</p>
+            <article ng-repeat="post in vm.postPage.content">
+                <div class="blog-item-wrap">
 
-            <div ng-switch="vm.isAuthenticated()">
-                <div class="alert alert-success" ng-switch-when="true" translate="home.logged.message" translate-values="{username: '{{vm.account.login}}'}">
-                    You are logged in as user "{{vm.account.login}}".
+                    <h2 class="blog-title"><a ui-sref="post-detail({id:post.id})">{{post.title}}</a></h2>
+                    <div class="entry-meta">
+                        <span class="meta-part"><i class="glyphicon glyphicon-user"> <a>{{post.author}}</a></i></span>
+                        <span class="meta-part"><i class="glyphicon glyphicon-calendar">{{post.createTime * 1000
+                            | date:'yyyy-MM-dd'}}</i></span>
+                        <span class="meta-part"><i
+                                class="glyphicon glyphicon-tag"><span
+                                ng-repeat="tag in post.tags"><a ui-sref="">{{tag.name}}</a></span></i></span>
+                        <span class="meta-part"><i class="glyphicon glyphicon-calendar">{{post.reads}}</i></span>
+                    </div>
+
+                    <div class="post-content" marked="post.summary">
+
+                    </div>
+                    <div class="entry-more">
+                        <div class="pull-left">
+                            <a class="btn btn-common" ui-sref="post-detail({id:post.id})">Read More <i class="glyphicon glyphicon-arrow-right"></i></a>
+                        </div>
+                    </div>
+
                 </div>
+            </article>
+            <article>
+                <uib-pager total-items="vm.totalItems" ng-model="vm.page" ng-change="vm.transition()"></uib-pager>
+            </article>
+        </div>
+        <div class="col-md-4">
+            <div class="sidebar">
+                <div class="entry-widget">
+                    <h5 class="widget-title">Tags</h5>
+                    <div class="tag">
 
-                <div class="alert alert-warning" ng-switch-when="false" translate="global.messages.info.authenticated" translate-compile>
-                    If you want to <a class="alert-link" href="" ng-click="vm.login()">sign in</a>, you can try the default accounts:<br/>- Administrator (login="admin" and password="admin") <br/>- User (login="user" and password="user").
+                    </div>
                 </div>
+                <div class="entry-widget">
+                    <h5 class="widget-title">Popular</h5>
+                    <div class="tag">
 
-                <div class="alert alert-warning" ng-switch-when="false" translate="global.messages.info.register" translate-compile>
-                    You don't have an account yet? <a class="alert-link" ui-sref="register">Register a new account</a>
+                    </div>
+                </div>
+                <div class="entry-widget">
+                    <h5 class="widget-title">Category</h5>
+                    <div class="tag">
+
+                    </div>
                 </div>
             </div>
-
-            <p translate="home.question">
-                If you have any question on JHipster:
-            </p>
-
-            <ul>
-                <li><a href="http://jhipster.github.io/" target="_blank" translate="home.link.homepage">JHipster homepage</a></li>
-                <li><a href="http://stackoverflow.com/tags/jhipster/info" target="_blank" translate="home.link.stackoverflow">JHipster on Stack Overflow</a></li>
-                <li><a href="https://github.com/jhipster/generator-jhipster/issues?state=open" target="_blank" translate="home.link.bugtracker">JHipster bug tracker</a></li>
-                <li><a href="https://gitter.im/jhipster/generator-jhipster" target="_blank" translate="home.link.chat">JHipster public chat room</a></li>
-                <li><a href="https://twitter.com/java_hipster" target="_blank"  translate="home.link.follow">follow @java_hipster on Twitter</a></li>
-            </ul>
-
-            <p>
-             <span translate="home.like">If you like JHipster, don't forget to give us a star on </span>&nbsp;<a href="https://github.com/jhipster/generator-jhipster" target="_blank" translate="home.github">Github</a>!
-            </p>
         </div>
     </div>
 </div>

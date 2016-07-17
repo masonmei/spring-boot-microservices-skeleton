@@ -36,6 +36,8 @@ public class RsConfiguration extends ResourceServerConfigurerAdapter {
                         .antMatchers("/configuration/ui").permitAll()
                         .antMatchers("/management/**").permitAll()
                         // .antMatchers("/management/**").hasAuthority(ADMIN)
+                        .antMatchers(HttpMethod.GET, "/api/posts/*").permitAll()
+                        .antMatchers(HttpMethod.GET, "/api/posts/*/comments").permitAll()
                         .antMatchers(HttpMethod.GET, "/api/**").hasAuthority(USER)
                         .antMatchers(HttpMethod.POST, "/api/**").hasAnyAuthority(EDITOR, ADMIN)
                         .antMatchers(HttpMethod.PUT, "/api/**").hasAnyAuthority(EDITOR, ADMIN)

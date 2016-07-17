@@ -1,4 +1,4 @@
-<nav class="navbar navbar-default" role="navigation">
+<nav class="navbar navbar-default" data-spy="affix" data-offset-top="60">
     <div class="container">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" ng-click="vm.toggleNavbar()">
@@ -12,7 +12,7 @@
                 <span translate="global.title">Gateway</span> <span class="navbar-version">v{{VERSION}}</span>
             </a>
         </div>
-        <div class="navbar-collapse" uib-collapse="vm.isNavbarCollapsed" ng-switch="vm.isAuthenticated()">
+        <div class="navbar-collapse collapse" uib-collapse="vm.isNavbarCollapsed" ng-switch="vm.isAuthenticated()" id="navigation">
             <ul class="nav navbar-nav navbar-right">
                 <li ui-sref-active="active">
                     <a ui-sref="home" ng-click="vm.collapseNavbar()">
