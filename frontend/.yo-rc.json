@@ -1,0 +1,10 @@
+{
+  "frontend": {
+    "baseName": "gateway",
+    "nativeLanguage": "zh-cn",
+    "languages": [
+      "en",
+      "zh-cn"
+    ]
+  }
+}

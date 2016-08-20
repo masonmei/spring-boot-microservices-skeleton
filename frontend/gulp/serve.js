@@ -7,13 +7,16 @@ var gulp = require('gulp'),
 var config = require('./config');
 
 module.exports = function () {
-    var baseUri = config.uri + config.apiPort;
+    var baseUri = config.uri + config.port;
+    var apiBaseUri = config.uri + config.apiPort;
     // Routes to proxy to the backend. Routes ending with a / will setup
     // a redirect so that if accessed without a trailing slash, will
     // redirect. This is required for some endpoints for proxy-middleware
     // to correctly handle them.
     var proxyRoutes = [
-        '/'
+        '/api',
+        '/uaa/api',
+        '/blog/api'
     ];
 
     var requireTrailingSlash = proxyRoutes.filter(function (r) {
@@ -41,7 +44,7 @@ module.exports = function () {
     .concat(
         // Build a list of proxies for routes: [route1_proxy, route2_proxy, ...]
         proxyRoutes.map(function (r) {
-            var options = url.parse(baseUri + r);
+            var options = url.parse(apiBaseUri + r);
             options.route = r;
             options.preserveHost = true;
             return proxy(options);
@@ -57,4 +60,4 @@ module.exports = function () {
     });
 
     gulp.start('watch');
-}
+};
