@@ -1,12 +1,12 @@
 module.exports = {
-    app: 'src/main/webapp/',
+    app: 'src/main/resources/public/',
     dist: 'target/www/',
     test: 'src/test/javascript/',
-    bower: 'src/main/webapp/dep/',
+    bower: 'src/main/resources/public/dep/',
     tmp: 'target/tmp',
     revManifest: 'target/tmp/rev-manifest.json',
     port: 9000,
-    apiPort: 8080,
+    apiPort: 15555,
     liveReloadPort: 35729,
     uri: 'http://localhost:',
     constantTemplate:

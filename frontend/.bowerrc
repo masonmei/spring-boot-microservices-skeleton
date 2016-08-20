@@ -1,3 +1,7 @@
 {
-    "directory": "src/main/webapp/dep"
+    "directory": "src/main/resources/public/dep",
+    "registry" : {
+        "search" : [ "https://repos.igitras.com/repository/bower-all" ]
+    },
+    "resolvers" : [ "bower-nexus3-resolver" ]
 }

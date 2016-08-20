@@ -1,0 +1,22 @@
+{
+  "tag": {
+    "home": {
+      "title": "标签",
+      "createLabel": "创建标签",
+      "createOrEditLabel": "添加或修改标签",
+      "search": "标签搜索"
+    },
+    "created": "A new Tag is created with identifier {{ param }}",
+    "updated": "A Tag is updated with identifier {{ param }}",
+    "deleted": "A Tag is deleted with identifier {{ param }}",
+    "delete": {
+      "question": "您确定要删除标签{{ id }}吗?"
+    },
+    "detail": {
+      "title": "标签"
+    },
+    "name": "名称",
+    "description": "描述",
+    "blogs": "博文"
+  }
+}

@@ -11,12 +11,6 @@
     <artifactId>frontend</artifactId>
     <packaging>pom</packaging>
 
-    <properties>
-        <node.version>v6.1.0</node.version>
-        <npm.version>3.8.9</npm.version>
-        <frontend-maven-plugin.version>1.0</frontend-maven-plugin.version>
-    </properties>
-
     <build>
         <plugins>
             <plugin>
@@ -25,7 +19,7 @@
                 <configuration>
                     <filesets>
                         <fileset>
-                            <directory>src/main/webapp/dep</directory>
+                            <directory>src/main/resources/public/dep</directory>
                             <directory>node_modules</directory>
                         </fileset>
                     </filesets>

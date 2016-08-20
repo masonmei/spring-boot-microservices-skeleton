@@ -1,0 +1,52 @@
+<article>
+    <div class="blog-item-wrap">
+        <h2 class="blog-title"><a ui-sref="post-detail({id:vm.post.id})">{{vm.post.title}}</a></h2>
+        <div class="entry-meta">
+            <span class="meta-part"><i class="glyphicon glyphicon-user"> <a>{{vm.post.author}}</a></i></span>
+            <span class="meta-part"><i class="glyphicon glyphicon-calendar">{{vm.post.createTime * 1000|date:'yyyy-MM-dd'}}</i></span>
+            <span class="meta-part"><i class="glyphicon glyphicon-tag"><span ng-repeat="tag in post.tags"><a ui-sref="">{{vm.tag.name}}</a></span></i></span>
+            <span class="meta-part"><i class="glyphicon glyphicon-calendar">{{vm.post.reads}}</i></span>
+            <span class="meta-part"><i class="glyphicon glyphicon-calendar">{{vm.post.commentCount}}</i></span>
+        </div>
+
+        <div class="post-content" marked="vm.post.content">
+        </div>
+
+        <button type="submit"
+                onclick="window.history.back()"
+                class="btn btn-info">
+            <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span
+                translate="entity.action.back"> Back</span>
+        </button>
+    </div>
+
+</article>
+
+
+<article>
+    <div id="comments" data-ng-show="vm.post.comments">
+        <div>
+            <H2>Comments:
+                <small class="pull-right"><a ui-sref="comment({postId: vm.post.id})" data-ng-show="isAuthenticated">Comment</a></small></H2>
+            <hr />
+        </div>
+        <div class="comments-list">
+            <div class="comments-item" ng-repeat="comment in vm.post.comments.content">
+                <div class="comment-box clearfix">
+                    <div class="avatar">
+                        <a href="#"><img alt="" src="content/images/user1.jpg"></a>
+                    </div>
+                    <div class="comment-content">
+                        <div class="comment-meta">
+                            <h3><a href="#">{{comment.author}}</a><small> at {{comment.createTime * 1000| date:'yyyy-MM-dd'}}</small></h3>
+                        </div>
+                        <div marked="comment.content">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <uib-pager total-items="vm.comments.totalElements" ng-model="vm.comments.number" ng-change="vm.transition()"></uib-pager>
+    </div>
+</article>

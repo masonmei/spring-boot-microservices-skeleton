@@ -27,12 +27,12 @@ var handleErrors = require('./gulp/handleErrors'),
     util = require('./gulp/utils'),
     build = require('./gulp/build');
 
-var yorc = require('./.yo-rc.json')['generator-jhipster'];
+// var yorc = require('./.yo-rc.json')['generator-jhipster'];
 
 var config = require('./gulp/config');
 
 gulp.task('clean', function () {
-    return del([config.dist], { dot: true });
+    return del([config.dist], {dot: true});
 });
 
 gulp.task('copy', function () {
@@ -51,18 +51,18 @@ gulp.task('copy', function () {
                 merge: true
             }))
             .pipe(gulp.dest(config.dist)),
-        gulp.src(config.app + 'assets/**/*.{woff,woff2,svg,ttf,eot,otf}')
+        gulp.src(config.app + 'content/**/*.{woff,woff2,svg,ttf,eot,otf}')
             .pipe(plumber({errorHandler: handleErrors}))
-            .pipe(changed(config.dist + 'assets/fonts/'))
+            .pipe(changed(config.dist + 'content/fonts/'))
             .pipe(flatten())
             .pipe(rev())
-            .pipe(gulp.dest(config.dist + 'assets/fonts/'))
+            .pipe(gulp.dest(config.dist + 'content/fonts/'))
             .pipe(rev.manifest(config.revManifest, {
                 base: config.dist,
                 merge: true
             }))
             .pipe(gulp.dest(config.dist)),
-        gulp.src([config.app + 'robots.txt', config.app + 'favicon.ico', config.app + '.htaccess'], { dot: true })
+        gulp.src([config.app + 'robots.txt', config.app + 'favicon.ico', config.app + '.htaccess'], {dot: true})
             .pipe(plumber({errorHandler: handleErrors}))
             .pipe(changed(config.dist))
             .pipe(gulp.dest(config.dist))
@@ -70,12 +70,12 @@ gulp.task('copy', function () {
 });
 
 gulp.task('images', function () {
-    return gulp.src(config.app + 'assets/images/**')
+    return gulp.src(config.app + 'content/images/**')
         .pipe(plumber({errorHandler: handleErrors}))
-        .pipe(changed(config.dist + 'assets/images'))
+        .pipe(changed(config.dist + 'content/images'))
         .pipe(imagemin({optimizationLevel: 5, progressive: true, interlaced: true}))
         .pipe(rev())
-        .pipe(gulp.dest(config.dist + 'assets/images'))
+        .pipe(gulp.dest(config.dist + 'content/images'))
         .pipe(rev.manifest(config.revManifest, {
             base: config.dist,
             merge: true
@@ -84,19 +84,8 @@ gulp.task('images', function () {
         .pipe(browserSync.reload({stream: true}));
 });
 
-
-gulp.task('languages', function () {
-    var locales = yorc.languages.map(function (locale) {
-        return config.bower + 'angular-i18n/angular-locale_' + locale + '.js';
-    });
-    return gulp.src(locales)
-        .pipe(plumber({errorHandler: handleErrors}))
-        .pipe(changed(config.app + 'i18n/'))
-        .pipe(gulp.dest(config.app + 'i18n/'));
-});
-
 gulp.task('styles', [], function () {
-    return gulp.src(config.app + 'assets/css')
+    return gulp.src(config.app + 'content/css')
         .pipe(browserSync.reload({stream: true}));
 });
 
@@ -223,8 +212,8 @@ gulp.task('test', ['inject:test', 'ngconstant:dev'], function (done) {
 gulp.task('watch', function () {
     gulp.watch('bower.json', ['install']);
     gulp.watch(['gulpfile.js', 'pom.xml'], ['ngconstant:dev']);
-    gulp.watch(config.app + 'assets/css/**/*.css', ['styles']);
-    gulp.watch(config.app + 'assets/images/**', ['images']);
+    gulp.watch(config.app + 'content/css/**/*.css', ['styles']);
+    gulp.watch(config.app + 'content/images/**', ['images']);
     gulp.watch(config.app + 'app/**/*.js', ['inject:app']);
     gulp.watch([config.app + '*.html', config.app + 'app/**', config.app + 'i18n/**']).on('change', browserSync.reload);
 });
@@ -238,7 +227,7 @@ gulp.task('serve', function () {
 });
 
 gulp.task('build', ['clean'], function (cb) {
-    runSequence(['copy', 'inject:vendor', 'ngconstant:prod', 'languages'], 'inject:app', 'inject:troubleshoot', 'assets:prod', cb);
+    runSequence(['copy', 'inject:vendor', 'ngconstant:prod'], 'inject:app', 'inject:troubleshoot', 'assets:prod', cb);
 });
 
 gulp.task('default', ['serve']);

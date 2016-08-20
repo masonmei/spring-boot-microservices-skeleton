@@ -3,4 +3,4 @@
 # node_modules ignored by default
 
 # ignore bower_components
-src/main/webapp/dep
+src/main/resources/public/dep

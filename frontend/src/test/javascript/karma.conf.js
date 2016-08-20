@@ -1,10 +1,21 @@
 // Karma configuration
 // http://karma-runner.github.io/0.10/config/configuration-file.html
 
+var sourcePreprocessors = ['coverage'];
+
+function isDebug() {
+    return process.argv.indexOf('--debug') >= 0;
+}
+
+if (isDebug()) {
+    // Disable JS minification if Karma is run with debug option.
+    sourcePreprocessors = [];
+}
+
 module.exports = function (config) {
     config.set({
         // base path, that will be used to resolve files and exclude
-        basePath: '../../',
+        basePath: 'src/test/javascript/'.replace(/[^/]+/g,'..'),
 
         // testing framework to use (jasmine/mocha/qunit/...)
         frameworks: ['jasmine'],
@@ -12,41 +23,42 @@ module.exports = function (config) {
         // list of files / patterns to load in the browser
         files: [
             // bower:js
-            'main/dep/jquery/dist/jquery.js',
-            'main/dep/angular/angular.js',
-            'main/dep/angular-animate/angular-animate.js',
-            'main/dep/angular-aria/angular-aria.js',
-            'main/dep/angular-messages/angular-messages.js',
-            'main/dep/angular-material/angular-material.js',
-            'main/dep/marked/lib/marked.js',
-            'main/dep/angular-marked/dist/angular-marked.js',
-            'main/dep/highlightjs/highlight.pack.js',
-            'main/dep/angular-bootstrap/ui-bootstrap-tpls.js',
-            'main/dep/angular-cache-buster/angular-cache-buster.js',
-            'main/dep/angular-cookies/angular-cookies.js',
-            'main/dep/angular-dynamic-locale/src/tmhDynamicLocale.js',
-            'main/dep/angular-local-storage/dist/angular-local-storage.js',
-            'main/dep/angular-loading-bar/build/loading-bar.js',
-            'main/dep/angular-resource/angular-resource.js',
-            'main/dep/angular-sanitize/angular-sanitize.js',
-            'main/dep/angular-translate/angular-translate.js',
-            'main/dep/messageformat/messageformat.js',
-            'main/dep/angular-translate-interpolation-messageformat/angular-translate-interpolation-messageformat.js',
-            'main/dep/angular-translate-loader-partial/angular-translate-loader-partial.js',
-            'main/dep/angular-translate-storage-cookie/angular-translate-storage-cookie.js',
-            'main/dep/angular-ui-router/release/angular-ui-router.js',
-            'main/dep/bootstrap/dist/js/bootstrap.js',
-            'main/dep/json3/lib/json3.js',
-            'main/dep/ng-file-upload/ng-file-upload.js',
-            'main/dep/ngInfiniteScroll/build/ng-infinite-scroll.js',
-            'main/dep/angular-mocks/angular-mocks.js',
+            'src/main/resources/public/dep/angular/angular.js',
+            'src/main/resources/public/dep/angular-aria/angular-aria.js',
+            'src/main/resources/public/dep/angular-bootstrap/ui-bootstrap-tpls.js',
+            'src/main/resources/public/dep/angular-cache-buster/angular-cache-buster.js',
+            'src/main/resources/public/dep/angular-cookies/angular-cookies.js',
+            'src/main/resources/public/dep/angular-dynamic-locale/src/tmhDynamicLocale.js',
+            'src/main/resources/public/dep/ngstorage/ngStorage.js',
+            'src/main/resources/public/dep/angular-loading-bar/build/loading-bar.js',
+            'src/main/resources/public/dep/angular-resource/angular-resource.js',
+            'src/main/resources/public/dep/angular-sanitize/angular-sanitize.js',
+            'src/main/resources/public/dep/angular-translate/angular-translate.js',
+            'src/main/resources/public/dep/messageformat/messageformat.js',
+            'src/main/resources/public/dep/angular-translate-loader-partial/angular-translate-loader-partial.js',
+            'src/main/resources/public/dep/angular-translate-storage-cookie/angular-translate-storage-cookie.js',
+            'src/main/resources/public/dep/angular-ui-router/release/angular-ui-router.js',
+            'src/main/resources/public/dep/jquery/dist/jquery.js',
+            'src/main/resources/public/dep/json3/lib/json3.js',
+            'src/main/resources/public/dep/marked/lib/marked.js',
+            'src/main/resources/public/dep/ng-file-upload/ng-file-upload.js',
+            'src/main/resources/public/dep/ngInfiniteScroll/build/ng-infinite-scroll.js',
+            'src/main/resources/public/dep/angular-marked/dist/angular-marked.js',
+            'src/main/resources/public/dep/highlightjs/highlight.pack.js',
+            'src/main/resources/public/dep/bootstrap-ui-datetime-picker/dist/datetime-picker.js',
+            'src/main/resources/public/dep/bootstrap-sass/assets/javascripts/bootstrap.js',
+            'src/main/resources/public/dep/angular-mocks/angular-mocks.js',
+            'src/main/resources/public/dep/angular-translate-interpolation-messageformat/angular-translate-interpolation-messageformat.js',
+            'src/main/resources/public/dep/bootstrap-material-design/dist/js/material.js',
+            'src/main/resources/public/dep/bootstrap-material-design/dist/js/ripples.js',
             // endbower
-            'main/javascript/scripts/app/app.js',
-            'main/javascript/scripts/app/**/*.js',
-            'main/javascript/scripts/components/**/*.+(js|html)',
-            'test/javascript/spec/helpers/module.js',
-            'test/javascript/spec/helpers/httpBackend.js',
-            'test/javascript/**/!(karma.conf).js'
+            'src/main/resources/public/app/app.module.js',
+            'src/main/resources/public/app/app.state.js',
+            'src/main/resources/public/app/app.constants.js',
+            'src/main/resources/public/app/**/*.+(js|html)',
+            'src/test/javascript/spec/helpers/module.js',
+            'src/test/javascript/spec/helpers/httpBackend.js',
+            'src/test/javascript/**/!(karma.conf).js'
         ],
 
 
@@ -54,19 +66,19 @@ module.exports = function (config) {
         exclude: [],
 
         preprocessors: {
-            './**/*.js': ['coverage']
+            './**/*.js': sourcePreprocessors
         },
 
         reporters: ['dots', 'jenkins', 'coverage', 'progress'],
 
         jenkinsReporter: {
-
-            outputFile: '../target/test-results/karma/TESTS-results.xml'
+            
+            outputFile: 'target/test-results/karma/TESTS-results.xml'
         },
 
         coverageReporter: {
-
-            dir: '../target/test-results/coverage',
+            
+            dir: 'target/test-results/coverage',
             reporters: [
                 {type: 'lcov', subdir: 'report-lcov'}
             ]
