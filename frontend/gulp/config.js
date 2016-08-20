@@ -1,6 +1,7 @@
 module.exports = {
     app: 'src/main/resources/public/',
     dist: 'target/www/',
+    swaggerDist: 'target/www/swagger-ui/',
     test: 'src/test/javascript/',
     bower: 'src/main/resources/public/dep/',
     tmp: 'target/tmp',

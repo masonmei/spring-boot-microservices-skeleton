@@ -78,4 +78,16 @@
         </plugins>
     </build>
 
+    <profiles>
+        <profile>
+            <id>product</id>
+            <dependencies>
+                <dependency>
+                    <groupId>com.igitras.frontend</groupId>
+                    <artifactId>frontend</artifactId>
+                    <version>${project.version}</version>
+                </dependency>
+            </dependencies>
+        </profile>
+    </profiles>
 </project>

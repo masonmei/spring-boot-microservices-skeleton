@@ -4,6 +4,6 @@
     angular
         .module('gatewayApp')
         .constant('VERSION', "1.0.0-SNAPSHOT")
-        .constant('DEBUG_INFO_ENABLED', true)
+        .constant('DEBUG_INFO_ENABLED', false)
 ;
 })();
